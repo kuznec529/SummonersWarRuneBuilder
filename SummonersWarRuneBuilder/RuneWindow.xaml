@@ -1,0 +1,64 @@
+﻿<Window x:Class="SummonersWarRuneBuilder.RuneWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="RuneWindow" Height="480" Width="480">
+    <Grid>
+        <TextBlock x:Name="PrimaryLabel" HorizontalAlignment="Left" Height="19" Margin="22,63,0,0" TextWrapping="Wrap" Text="Primary" VerticalAlignment="Top" Width="49"/>
+        <ComboBox x:Name="PrimaryPropertyCombo" HorizontalAlignment="Left" Margin="94,63,0,0" VerticalAlignment="Top" Width="82" Height="19" SelectionChanged="PrimaryPropertyCombo_SelectionChanged" />
+        <ComboBox x:Name="StarCombo" HorizontalAlignment="Left" Margin="76,19,0,0" VerticalAlignment="Top" Width="44" Height="19" SelectionChanged="StarCombo_SelectionChanged"/>
+        <TextBlock x:Name="StarLabel" HorizontalAlignment="Left" Height="19" Margin="22,19,0,0" TextWrapping="Wrap" Text="Stars" VerticalAlignment="Top" Width="49"/>
+        <TextBlock x:Name="TypeLabel" HorizontalAlignment="Left" Height="19" Margin="173,19,0,0" TextWrapping="Wrap" Text="Type" VerticalAlignment="Top" Width="49"/>
+        <ComboBox x:Name="TypeCombo" HorizontalAlignment="Left" Margin="222,19,0,0" VerticalAlignment="Top" Width="70" Height="19" RenderTransformOrigin="4.115,0.958" SelectionChanged="TypeCombo_SelectionChanged"/>
+        <TextBlock x:Name="LevelLabel" HorizontalAlignment="Left" Height="19" Margin="326,19,0,0" TextWrapping="Wrap" Text="Level" VerticalAlignment="Top" Width="49"/>
+        <ComboBox x:Name="LevelCombo" HorizontalAlignment="Left" Margin="375,19,0,0" VerticalAlignment="Top" Width="40" Height="19" RenderTransformOrigin="4.115,0.958" SelectionChanged="LevelCombo_SelectionChanged"/>
+        <TextBlock x:Name="InnateLabel" HorizontalAlignment="Left" Height="19" Margin="22,87,0,0" TextWrapping="Wrap" Text="Innate" VerticalAlignment="Top" Width="49"/>
+        <ComboBox x:Name="InnatePropertyCombo" HorizontalAlignment="Left" Margin="94,87,0,0" VerticalAlignment="Top" Width="82" Height="19" SelectionChanged="InnatePropertyCombo_SelectionChanged"/>
+        <ComboBox x:Name="InnateAmountCombo" HorizontalAlignment="Left" Margin="191,87,0,0" VerticalAlignment="Top" Width="49" Height="19" SelectionChanged="InnateAmountCombo_SelectionChanged"/>
+        <TextBlock x:Name="PropertyPrimary" HorizontalAlignment="Left" Height="19" Margin="191,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="49"/>
+        <ComboBox x:Name="SecondaryPropertyCombo1" HorizontalAlignment="Left" Margin="94,111,0,0" VerticalAlignment="Top" Width="82" Height="19" SelectionChanged="SecondaryPropertyCombo1_SelectionChanged"/>
+        <ComboBox x:Name="SecondaryPropertyCombo2" HorizontalAlignment="Left" Margin="94,135,0,0" VerticalAlignment="Top" Width="82" Height="19" SelectionChanged="SecondaryPropertyCombo2_SelectionChanged"/>
+        <ComboBox x:Name="SecondaryPropertyCombo3" HorizontalAlignment="Left" Margin="94,159,0,0" VerticalAlignment="Top" Width="82" Height="19" SelectionChanged="SecondaryPropertyCombo3_SelectionChanged"/>
+        <ComboBox x:Name="SecondaryPropertyCombo4" HorizontalAlignment="Left" Margin="94,183,0,0" VerticalAlignment="Top" Width="82" Height="19" SelectionChanged="SecondaryPropertyCombo4_SelectionChanged"/>
+        <ComboBox x:Name="SecondaryAmountCombo1" HorizontalAlignment="Left" Margin="191,111,0,0" VerticalAlignment="Top" Width="49" Height="19" SelectionChanged="SecondaryAmountCombo1_SelectionChanged"/>
+        <ComboBox x:Name="SecondaryAmountCombo2" HorizontalAlignment="Left" Margin="191,135,0,0" VerticalAlignment="Top" Width="49" Height="19"/>
+        <ComboBox x:Name="SecondaryAmountCombo3" HorizontalAlignment="Left" Margin="191,159,0,0" VerticalAlignment="Top" Width="49" Height="19"/>
+        <ComboBox x:Name="SecondaryAmountCombo4" HorizontalAlignment="Left" Margin="191,183,0,0" VerticalAlignment="Top" Width="49" Height="19"/>
+        <Button x:Name="DoneButton" Content="Done" HorizontalAlignment="Left" Height="24" Margin="352,402,0,0" VerticalAlignment="Top" Width="91"/>
+        <TextBlock x:Name="SecondaryLabel1" HorizontalAlignment="Left" Height="19" Margin="22,111,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
+        <TextBlock x:Name="SecondaryLabel2" HorizontalAlignment="Left" Height="19" Margin="22,135,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
+        <TextBlock x:Name="SecondaryLabel3" HorizontalAlignment="Left" Height="19" Margin="22,159,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
+        <TextBlock x:Name="SecondaryLabel4" HorizontalAlignment="Left" Height="19" Margin="22,183,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
+        <ComboBox x:Name="Upgrade3PropertyCombo" HorizontalAlignment="Left" Margin="297,87,0,0" VerticalAlignment="Top" Width="82" Height="19"/>
+        <ComboBox x:Name="Upgrade6PropertyCombo" HorizontalAlignment="Left" Margin="297,111,0,0" VerticalAlignment="Top" Width="82" Height="19"/>
+        <ComboBox x:Name="Upgrade9PropertyCombo" HorizontalAlignment="Left" Margin="297,135,0,0" VerticalAlignment="Top" Width="82" Height="19"/>
+        <ComboBox x:Name="Upgrade12PropertyCombo" HorizontalAlignment="Left" Margin="297,159,0,0" VerticalAlignment="Top" Width="82" Height="19"/>
+        <ComboBox x:Name="Upgrade3AmountCombo" HorizontalAlignment="Left" Margin="394,87,0,0" VerticalAlignment="Top" Width="49" Height="19"/>
+        <ComboBox x:Name="Upgrade6AmountCombo" HorizontalAlignment="Left" Margin="394,111,0,0" VerticalAlignment="Top" Width="49" Height="19"/>
+        <ComboBox x:Name="Upgrade9AmountCombo" HorizontalAlignment="Left" Margin="394,135,0,0" VerticalAlignment="Top" Width="49" Height="19"/>
+        <ComboBox x:Name="Upgrade12AmountCombo" HorizontalAlignment="Left" Margin="394,159,0,0" VerticalAlignment="Top" Width="49" Height="19"/>
+        <TextBlock x:Name="Upgrade3Label" HorizontalAlignment="Left" Height="19" Margin="259,87,0,0" TextWrapping="Wrap" Text="+3" VerticalAlignment="Top" Width="33"/>
+        <TextBlock x:Name="Upgrade6Label" HorizontalAlignment="Left" Height="19" Margin="259,111,0,0" TextWrapping="Wrap" Text="+6" VerticalAlignment="Top" Width="33"/>
+        <TextBlock x:Name="Upgrade9Label" HorizontalAlignment="Left" Height="19" Margin="259,135,0,0" TextWrapping="Wrap" Text="+9" VerticalAlignment="Top" Width="33"/>
+        <TextBlock x:Name="Upgrade12Label" HorizontalAlignment="Left" Height="19" Margin="259,159,0,0" TextWrapping="Wrap" Text="+12" VerticalAlignment="Top" Width="33"/>
+        <TextBlock x:Name="PrimaryOverall" HorizontalAlignment="Left" Height="19" Margin="22,263,0,0" TextWrapping="Wrap" Text="Primary" VerticalAlignment="Top" Width="49"/>
+        <TextBlock x:Name="InnateOverall" HorizontalAlignment="Left" Height="19" Margin="22,287,0,0" TextWrapping="Wrap" Text="Innate" VerticalAlignment="Top" Width="49"/>
+        <TextBlock x:Name="SecondaryOverallLabel1" HorizontalAlignment="Left" Height="19" Margin="22,311,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
+        <TextBlock x:Name="SecondaryOverallLabel2" HorizontalAlignment="Left" Height="19" Margin="22,335,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
+        <TextBlock x:Name="SecondaryOverallLabel3" HorizontalAlignment="Left" Height="19" Margin="22,359,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
+        <TextBlock x:Name="SecondaryOverallLabel4" HorizontalAlignment="Left" Height="19" Margin="22,383,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
+        <TextBlock x:Name="SecondaryPropertyOverall1" HorizontalAlignment="Left" Height="19" Margin="94,311,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="48"/>
+        <TextBlock x:Name="SecondaryPropertyOverall2" HorizontalAlignment="Left" Height="19" Margin="94,335,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="48"/>
+        <TextBlock x:Name="SecondaryPropertyOverall3" HorizontalAlignment="Left" Height="19" Margin="94,359,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="48"/>
+        <TextBlock x:Name="SecondaryPropertyOverall4" HorizontalAlignment="Left" Height="19" Margin="94,383,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="48"/>
+        <TextBlock x:Name="PrimaryPropertyOverall" HorizontalAlignment="Left" Height="19" Margin="94,263,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="48"/>
+        <TextBlock x:Name="InnatePropertyOverall" HorizontalAlignment="Left" Height="19" Margin="94,287,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="48"/>
+        <TextBlock x:Name="SecondaryAmountOverall1" HorizontalAlignment="Left" Height="19" Margin="147,311,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="48"/>
+        <TextBlock x:Name="SecondaryAmountOverall2" HorizontalAlignment="Left" Height="19" Margin="147,335,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="48"/>
+        <TextBlock x:Name="SecondaryAmountOverall3" HorizontalAlignment="Left" Height="19" Margin="147,359,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="48"/>
+        <TextBlock x:Name="SecondaryAmountOverall4" HorizontalAlignment="Left" Height="19" Margin="147,383,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="48"/>
+        <TextBlock x:Name="PrimaryAmountOverall" HorizontalAlignment="Left" Height="19" Margin="147,263,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="48"/>
+        <TextBlock x:Name="InnateAmountOverall" HorizontalAlignment="Left" Height="19" Margin="147,287,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="48"/>
+        <Button x:Name="CalculateButton" Content="Calculate" HorizontalAlignment="Left" Height="24" Margin="245,402,0,0" VerticalAlignment="Top" Width="91" Click="RuneCalculateButton_Click"/>
+        <TextBlock x:Name="ConsoleLog" HorizontalAlignment="Left" Height="115" Margin="326,263,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="117"/>
+    </Grid>
+</Window>
