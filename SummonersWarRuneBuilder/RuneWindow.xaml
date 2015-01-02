@@ -28,14 +28,14 @@
         <TextBlock x:Name="SecondaryLabel2" HorizontalAlignment="Left" Height="19" Margin="22,135,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
         <TextBlock x:Name="SecondaryLabel3" HorizontalAlignment="Left" Height="19" Margin="22,159,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
         <TextBlock x:Name="SecondaryLabel4" HorizontalAlignment="Left" Height="19" Margin="22,183,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
-        <ComboBox x:Name="Upgrade3PropertyCombo" HorizontalAlignment="Left" Margin="297,87,0,0" VerticalAlignment="Top" Width="82" Height="19"/>
-        <ComboBox x:Name="Upgrade6PropertyCombo" HorizontalAlignment="Left" Margin="297,111,0,0" VerticalAlignment="Top" Width="82" Height="19"/>
-        <ComboBox x:Name="Upgrade9PropertyCombo" HorizontalAlignment="Left" Margin="297,135,0,0" VerticalAlignment="Top" Width="82" Height="19"/>
-        <ComboBox x:Name="Upgrade12PropertyCombo" HorizontalAlignment="Left" Margin="297,159,0,0" VerticalAlignment="Top" Width="82" Height="19"/>
-        <ComboBox x:Name="Upgrade3AmountCombo" HorizontalAlignment="Left" Margin="394,87,0,0" VerticalAlignment="Top" Width="49" Height="19"/>
-        <ComboBox x:Name="Upgrade6AmountCombo" HorizontalAlignment="Left" Margin="394,111,0,0" VerticalAlignment="Top" Width="49" Height="19"/>
-        <ComboBox x:Name="Upgrade9AmountCombo" HorizontalAlignment="Left" Margin="394,135,0,0" VerticalAlignment="Top" Width="49" Height="19"/>
-        <ComboBox x:Name="Upgrade12AmountCombo" HorizontalAlignment="Left" Margin="394,159,0,0" VerticalAlignment="Top" Width="49" Height="19"/>
+        <ComboBox x:Name="Upgrade3PropertyCombo" HorizontalAlignment="Left" Margin="297,87,0,0" VerticalAlignment="Top" Width="82" Height="19" SelectionChanged="Upgrade3PropertyCombo_SelectionChanged"/>
+        <ComboBox x:Name="Upgrade6PropertyCombo" HorizontalAlignment="Left" Margin="297,111,0,0" VerticalAlignment="Top" Width="82" Height="19" SelectionChanged="Upgrade6PropertyCombo_SelectionChanged"/>
+        <ComboBox x:Name="Upgrade9PropertyCombo" HorizontalAlignment="Left" Margin="297,135,0,0" VerticalAlignment="Top" Width="82" Height="19" SelectionChanged="Upgrade9PropertyCombo_SelectionChanged"/>
+        <ComboBox x:Name="Upgrade12PropertyCombo" HorizontalAlignment="Left" Margin="297,159,0,0" VerticalAlignment="Top" Width="82" Height="19" SelectionChanged="Upgrade12PropertyCombo_SelectionChanged"/>
+        <ComboBox x:Name="Upgrade3AmountCombo" HorizontalAlignment="Left" Margin="394,87,0,0" VerticalAlignment="Top" Width="49" Height="19" SelectionChanged="Upgrade3AmountCombo_SelectionChanged"/>
+        <ComboBox x:Name="Upgrade6AmountCombo" HorizontalAlignment="Left" Margin="394,111,0,0" VerticalAlignment="Top" Width="49" Height="19" SelectionChanged="Upgrade6AmountCombo_SelectionChanged"/>
+        <ComboBox x:Name="Upgrade9AmountCombo" HorizontalAlignment="Left" Margin="394,135,0,0" VerticalAlignment="Top" Width="49" Height="19" SelectionChanged="Upgrade9AmountCombo_SelectionChanged"/>
+        <ComboBox x:Name="Upgrade12AmountCombo" HorizontalAlignment="Left" Margin="394,159,0,0" VerticalAlignment="Top" Width="49" Height="19" SelectionChanged="Upgrade12AmountCombo_SelectionChanged"/>
         <TextBlock x:Name="Upgrade3Label" HorizontalAlignment="Left" Height="19" Margin="259,87,0,0" TextWrapping="Wrap" Text="+3" VerticalAlignment="Top" Width="33"/>
         <TextBlock x:Name="Upgrade6Label" HorizontalAlignment="Left" Height="19" Margin="259,111,0,0" TextWrapping="Wrap" Text="+6" VerticalAlignment="Top" Width="33"/>
         <TextBlock x:Name="Upgrade9Label" HorizontalAlignment="Left" Height="19" Margin="259,135,0,0" TextWrapping="Wrap" Text="+9" VerticalAlignment="Top" Width="33"/>

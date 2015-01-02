@@ -73,7 +73,7 @@ namespace SummonersWarRuneBuilder
                                                                   {1,1,2,2,2,3}}; //Res
 
 
-        private static readonly int[, ,] _upgradeAmountRange = new int[12, 6, 2] { { {0,0},{0,0},{0,0},{0,0},{0,0},{0,0} }, //None
+        private static readonly int[, ,] _secondaryStatRange = new int[12, 6, 2] { { {0,0},{0,0},{0,0},{0,0},{0,0},{0,0} }, //None
                                                                                  { {11,60},{27,117},{49,168},{80,222},{119,279},{166,339} }, //HP
                                                                                  { {1,2},{1,4},{2,5},{3,7},{4,8},{5,10} }, //HPPercent
                                                                                  { {3,5},{4,7},{5,10},{7,12},{8,15},{10,23} }, //Atk
@@ -86,7 +86,20 @@ namespace SummonersWarRuneBuilder
                                                                                  { {1,3},{1,4},{2,5},{2,6},{3,7},{4,8} }, //Res
                                                                                  { {1,3},{1,4},{2,5},{2,6},{3,7},{4,8} } }; //Acc
 
+        private static readonly int[, ,] _upgradeAmountRange = new int[12, 6, 2] { { {0,0},{0,0},{0,0},{0,0},{0,0},{0,0} }, //None
+                                                                                 { {14,54},{33,80},{55,115},{81,166},{113,240},{149,344} }, //HP
+                                                                                 { {1,2},{1,4},{2,5},{2,6},{3,7},{4,8} }, //HPPercent
+                                                                                 { {3,5},{4,7},{5,10},{7,12},{9,15},{11,18} }, //Atk
+                                                                                 { {1,3},{1,4},{2,5},{2,6},{3,7},{4,8} }, //AtkPercent
+                                                                                 { {3,5},{4,7},{5,10},{7,12},{9,15},{11,18} }, //Def
+                                                                                 { {1,3},{1,4},{2,5},{2,6},{3,7},{4,8} }, //DefPercent
+                                                                                 { {1,2},{1,3},{2,3},{3,4},{3,5},{4,6} }, //SPD
+                                                                                 { {1,2},{1,3},{2,3},{3,4},{3,5},{4,6} }, //CritRate
+                                                                                 { {1,3},{1,4},{2,5},{2,6},{3,7},{4,8} }, //CritDmg
+                                                                                 { {1,3},{1,4},{2,5},{2,6},{3,7},{4,8} }, //Res
+                                                                                 { {1,3},{1,4},{2,5},{2,6},{3,7},{4,8} } }; //Acc
 
+        private static readonly RuneStat.Property[][] _primaryPropertyList = new RuneStat.Property[6][];
         
         public static readonly int[] Stars = new int[6] { 1, 2, 3, 4, 5, 6 };
         public static readonly int[] Levels = new int[16] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
@@ -105,7 +118,9 @@ namespace SummonersWarRuneBuilder
                 _upgrades[i] = new RuneStat();
                 _secondary[i] = new RuneStat();
             }
+            _primaryPropertyList[0] = new RuneStat.Property[5];
         }
+
 
         public void setStar(int star)
         {
@@ -136,13 +151,13 @@ namespace SummonersWarRuneBuilder
             }
         }
 
-        public Boolean setSecondaryProperty(int i, RuneStat stat)
+        public Boolean setSecondaryStat(int i, RuneStat stat)
         {
             _secondary[i] = stat;
             return true;
         }
 
-        public List<RuneStat> getCompiledSecondaryProperties()
+        public List<RuneStat> getCompiledSecondaryStats()
         {
             calculate();
            
@@ -162,7 +177,7 @@ namespace SummonersWarRuneBuilder
             return results;
         }
 
-        public Boolean setSecondaryProperties(List<RuneStat> stats)
+        public Boolean setSecondaryStats(List<RuneStat> stats)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -177,12 +192,12 @@ namespace SummonersWarRuneBuilder
             return true;
         }
 
-        public RuneStat getSecondaryProperty(int i)
+        public RuneStat getSecondaryStats(int i)
         {
             return _secondary[i];
         }
 
-        public Boolean setUpgradeProperties(List<RuneStat> stats)
+        public Boolean setUpgradeStats(List<RuneStat> stats)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -197,18 +212,18 @@ namespace SummonersWarRuneBuilder
             return true;
         }
 
-        public Boolean setUpgradeProperty(int i, RuneStat stats)
+        public Boolean setUpgradeStat(int i, RuneStat stats)
         {
             _upgrades[i] = stats;
             return true;
         }
 
-        private RuneStat getUpgradeProperty(int i)
+        private RuneStat getUpgradeStat(int i)
         {
             return _upgrades[i];
         }
 
-        public Boolean setInherentProperty(RuneStat stat)
+        public Boolean setInherentStat(RuneStat stat)
         {
             _inherent = stat;
             return true;
@@ -302,6 +317,11 @@ namespace SummonersWarRuneBuilder
             return true;
         }
 
+        public static int[] getSecondaryBaseRange(RuneStat.Property property, int star)
+        {
+            return new int[2] { _secondaryStatRange[(int)property, star - 1, 0], _secondaryStatRange[(int)property, star - 1, 1] };
+        }
+
         public static int[] getSecondaryIncrementRange(RuneStat.Property property, int star)
         {
             return new int[2] { _upgradeAmountRange[(int)property, star-1, 0], _upgradeAmountRange[(int)property, star-1, 1] };
@@ -320,7 +340,7 @@ namespace SummonersWarRuneBuilder
             result += star.ToString() + ",";
             result += getPrimary().ToString() + ",";
             result += _inherent.ToString() + ",";
-            List<RuneStat> secondaries = getCompiledSecondaryProperties();
+            List<RuneStat> secondaries = getCompiledSecondaryStats();
 
             foreach (RuneStat item in secondaries)
             {

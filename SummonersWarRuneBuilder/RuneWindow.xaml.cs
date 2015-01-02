@@ -177,7 +177,7 @@ namespace SummonersWarRuneBuilder
             {
                 return false;
             }
-            _rune.setInherentProperty(new RuneStat(runeProperty, runeAmount));
+            _rune.setInherentStat(new RuneStat(runeProperty, runeAmount));
             return true;
         }
 
@@ -216,18 +216,18 @@ namespace SummonersWarRuneBuilder
                 RuneStat stat = new RuneStat();
                 stat.setProperty(RuneStat.toProperty((string)secondaryPropertyComboBoxes[i].SelectedItem));
                 stat.setAmount((int)secondaryAmountComboBoxes[i].SelectedItem);
-                _rune.setSecondaryProperty(i, stat);
+                _rune.setSecondaryStat(i, stat);
             }
             else
             {
-                _rune.setSecondaryProperty(i, new RuneStat());
+                _rune.setSecondaryStat(i, new RuneStat());
             }
             return true;
         }
 
         private Boolean displaySecondary()
         {
-            List<RuneStat> stats = _rune.getCompiledSecondaryProperties();
+            List<RuneStat> stats = _rune.getCompiledSecondaryStats();
             for (int i = 0; i < 4; i++)
             {
                 if (i < stats.Count)
@@ -262,11 +262,11 @@ namespace SummonersWarRuneBuilder
                 RuneStat stat = new RuneStat();
                 stat.setProperty(RuneStat.toProperty((string)upgradePropertyComboBoxes[i].SelectedItem));
                 stat.setAmount((int)upgradeAmountComboBoxes[i].SelectedItem);
-                _rune.setUpgradeProperty(i, stat);
+                _rune.setUpgradeStat(i, stat);
             }
             else
             {
-                _rune.setUpgradeProperty(i, new RuneStat());
+                _rune.setUpgradeStat(i, new RuneStat());
                 return false;
             }
             return true;
@@ -391,7 +391,7 @@ namespace SummonersWarRuneBuilder
         {
             if (SecondaryPropertyCombo1.SelectedItem != null)
             {
-                int[] range = Rune.getSecondaryIncrementRange(RuneStat.parseProperty((string)SecondaryPropertyCombo1.SelectedItem), _rune.star);
+                int[] range = Rune.getSecondaryBaseRange(RuneStat.parseProperty((string)SecondaryPropertyCombo1.SelectedItem), _rune.star);
                 SecondaryAmountCombo1.ItemsSource = Enumerable.Range(range[0], range[1] - range[0] + 1);
                 
             }
@@ -401,7 +401,7 @@ namespace SummonersWarRuneBuilder
         {
             if (SecondaryPropertyCombo2.SelectedItem != null)
             {
-                int[] range = Rune.getSecondaryIncrementRange(RuneStat.parseProperty((string)SecondaryPropertyCombo2.SelectedItem), _rune.star);
+                int[] range = Rune.getSecondaryBaseRange(RuneStat.parseProperty((string)SecondaryPropertyCombo2.SelectedItem), _rune.star);
                 SecondaryAmountCombo2.ItemsSource = Enumerable.Range(range[0], range[1] - range[0] + 1); 
                 
             }
@@ -411,7 +411,7 @@ namespace SummonersWarRuneBuilder
         {
             if (SecondaryPropertyCombo3.SelectedItem != null)
             {
-                int[] range = Rune.getSecondaryIncrementRange(RuneStat.parseProperty((string)SecondaryPropertyCombo3.SelectedItem), _rune.star);
+                int[] range = Rune.getSecondaryBaseRange(RuneStat.parseProperty((string)SecondaryPropertyCombo3.SelectedItem), _rune.star);
                 SecondaryAmountCombo3.ItemsSource = Enumerable.Range(range[0], range[1] - range[0] + 1);
             }
         }
@@ -420,7 +420,7 @@ namespace SummonersWarRuneBuilder
         {
             if (SecondaryPropertyCombo4.SelectedItem != null)
             {
-                int[] range = Rune.getSecondaryIncrementRange(RuneStat.parseProperty((string)SecondaryPropertyCombo4.SelectedItem), _rune.star);
+                int[] range = Rune.getSecondaryBaseRange(RuneStat.parseProperty((string)SecondaryPropertyCombo4.SelectedItem), _rune.star);
                 SecondaryAmountCombo4.ItemsSource = Enumerable.Range(range[0], range[1] - range[0] + 1);
             }
         }
@@ -429,39 +429,11 @@ namespace SummonersWarRuneBuilder
         {
             if (InnatePropertyCombo.SelectedItem != null)
             {
-                int[] range = Rune.getSecondaryIncrementRange(RuneStat.parseProperty((string)InnatePropertyCombo.SelectedItem), _rune.star);
+                int[] range = Rune.getSecondaryBaseRange(RuneStat.parseProperty((string)InnatePropertyCombo.SelectedItem), _rune.star);
                 InnateAmountCombo.ItemsSource = Enumerable.Range(range[0], range[1] - range[0] + 1);
             }
         }
 
-
-
-        //
-        //
-        // Misc methods
-        //
-        //
-
-        public static String listToString(List<int> lst)
-        {
-            String result = "";
-            foreach(int item in lst) {
-                result += item.ToString();
-                result += " ";
-            }
-            return result;
-        }
-
-        public static String listToString(List<string> lst)
-        {
-            String result = "";
-            foreach (string item in lst)
-            {
-                result += item;
-                result += " ";
-            }
-            return result;
-        }
 
         private void StarCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -537,9 +509,117 @@ namespace SummonersWarRuneBuilder
             }
         }
 
-        public void unserialize(string info) 
+        private void Upgrade3PropertyCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Upgrade3PropertyCombo.SelectedItem != null)
+            {
+                int[] range = Rune.getSecondaryIncrementRange(RuneStat.parseProperty((string)Upgrade3PropertyCombo.SelectedItem), _rune.star);
+                Upgrade3AmountCombo.ItemsSource = Enumerable.Range(range[0], range[1] - range[0] + 1);
+
+            }
+        }
+
+        private void Upgrade6PropertyCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Upgrade6PropertyCombo.SelectedItem != null)
+            {
+                int[] range = Rune.getSecondaryIncrementRange(RuneStat.parseProperty((string)Upgrade6PropertyCombo.SelectedItem), _rune.star);
+                Upgrade6AmountCombo.ItemsSource = Enumerable.Range(range[0], range[1] - range[0] + 1);
+
+            }
+        }
+
+        private void Upgrade9PropertyCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Upgrade9PropertyCombo.SelectedItem != null)
+            {
+                int[] range = Rune.getSecondaryIncrementRange(RuneStat.parseProperty((string)Upgrade9PropertyCombo.SelectedItem), _rune.star);
+                Upgrade9AmountCombo.ItemsSource = Enumerable.Range(range[0], range[1] - range[0] + 1);
+
+            }
+        }
+
+        private void Upgrade12PropertyCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Upgrade12PropertyCombo.SelectedItem != null)
+            {
+                int[] range = Rune.getSecondaryIncrementRange(RuneStat.parseProperty((string)Upgrade12PropertyCombo.SelectedItem), _rune.star);
+                Upgrade12AmountCombo.ItemsSource = Enumerable.Range(range[0], range[1] - range[0] + 1);
+
+            }
+        }
+
+        private void Upgrade3AmountCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Upgrade3PropertyCombo.SelectedItem != null && Upgrade3AmountCombo.SelectedItem != null)
+            {
+                setUpgrade(0);
+                calculate();
+                displaySecondary();
+            }
+        }
+
+        private void Upgrade6AmountCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Upgrade6PropertyCombo.SelectedItem != null && Upgrade6AmountCombo.SelectedItem != null)
+            {
+                setUpgrade(1);
+                calculate();
+                displaySecondary();
+            }
+        }
+
+        private void Upgrade9AmountCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Upgrade9PropertyCombo.SelectedItem != null && Upgrade9AmountCombo.SelectedItem != null)
+            {
+                setUpgrade(2);
+                calculate();
+                displaySecondary();
+            }
+        }
+
+        private void Upgrade12AmountCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Upgrade12PropertyCombo.SelectedItem != null && Upgrade12AmountCombo.SelectedItem != null)
+            {
+                setUpgrade(3);
+                calculate();
+                displaySecondary();
+            }
+        }
+
+        //
+        //
+        // Misc methods
+        //
+        //
+
+        public static String listToString(List<int> lst)
+        {
+            String result = "";
+            foreach(int item in lst) {
+                result += item.ToString();
+                result += " ";
+            }
+            return result;
+        }
+
+        public static String listToString(List<string> lst)
+        {
+            String result = "";
+            foreach (string item in lst)
+            {
+                result += item;
+                result += " ";
+            }
+            return result;
+        }
+
+        public void unserialize(string info)
         {
 
         }
+
     }
 }
