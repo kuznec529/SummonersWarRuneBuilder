@@ -27,6 +27,7 @@ namespace SummonersWarRuneBuilder
         private Boolean[] _completedRunes;
         private List<Rune.Type> _runeBonuses;
         private List<RuneStat> _overallStats;
+        private double[] _additionalStats;
         private TextBlock[,] _runeStats;
         private string[] _monsterdata;
         private List<Monster> _monsters;
@@ -46,6 +47,7 @@ namespace SummonersWarRuneBuilder
             _monsterdata = File.ReadAllLines(_FilePath);
             _monsters = new List<Monster>();
             _activeMonster = new Monster();
+            _runeBonuses = new List<Rune.Type>();
             foreach (string line in _monsterdata)
             {
                 if (line.Length != 0)
@@ -70,11 +72,19 @@ namespace SummonersWarRuneBuilder
         {
             _runes = new Rune[6];
             _completedRunes = new Boolean[6];
+            _additionalStats = new double[Enum.GetNames(typeof(Monster.Stat)).Length];
+
             for (int i = 0; i < 6; i++)
             {
                 _runes[i] = new Rune(i+1);
                 _completedRunes[i] = false;
             }
+
+            for (int i = 0; i < _additionalStats.Length; i++)
+            {
+                _additionalStats[i] = 0;
+            }
+
             _overallStats = new List<RuneStat>();
 
         }
@@ -168,24 +178,81 @@ namespace SummonersWarRuneBuilder
         {
             _runedActiveMonster = new Monster(_activeMonster);
             int[] overallStats = new int[Enum.GetNames(typeof(RuneStat.Property)).Length];
+            
+            for (int i = 0; i < _additionalStats.Length; i++)
+            {
+                _additionalStats[i] = 0;
+            }
+
             for (int i = 0; i < overallStats.Length; i++)
             {
                 overallStats[i] = 0;
             }
+
             foreach (RuneStat stat in _overallStats)
             {
                 overallStats[(int)stat.property] += stat.amount;
             }
 
-            _runedActiveMonster.setHP(calculateStat(_activeMonster.HP, overallStats[(int)RuneStat.Property.HPPercent], overallStats[(int)RuneStat.Property.HP]));
-            _runedActiveMonster.setAtk(calculateStat(_activeMonster.Atk, overallStats[(int)RuneStat.Property.AtkPercent], overallStats[(int)RuneStat.Property.Atk]));
-            _runedActiveMonster.setDef(calculateStat(_activeMonster.Def, overallStats[(int)RuneStat.Property.DefPercent], overallStats[(int)RuneStat.Property.Def]));
-            _runedActiveMonster.setSPD(_activeMonster.SPD + overallStats[(int)RuneStat.Property.SPD]);
-            _runedActiveMonster.setCritRate(_activeMonster.CritRate + overallStats[(int)RuneStat.Property.CritRate]);
-            _runedActiveMonster.setCritDmg(_activeMonster.CritDmg + overallStats[(int)RuneStat.Property.CritDmg]);
-            _runedActiveMonster.setRes(_activeMonster.Res + overallStats[(int)RuneStat.Property.Res]);
-            _runedActiveMonster.setAcc(_activeMonster.Acc + overallStats[(int)RuneStat.Property.Acc]);
+            foreach (Rune.Type type in _runeBonuses)
+            {
+                switch (type)
+                {
+                    default:
+                        break;
+                    case Rune.Type.Energy:
+                        _additionalStats[(int)Monster.Stat.HP] += _activeMonster.HP * 0.15;
+                        break;
+                    case Rune.Type.Fatal:
+                        _additionalStats[(int)Monster.Stat.Atk] += _activeMonster.Atk * 0.3;
+                        break;
+                    case Rune.Type.Blade:
+                        _additionalStats[(int)Monster.Stat.CritRate] += 12;
+                        break;
+                    case Rune.Type.Rage:
+                        _additionalStats[(int)Monster.Stat.CritDmg] += 40;
+                        break;
+                    case Rune.Type.Swift:
+                        _additionalStats[(int)Monster.Stat.SPD] += _activeMonster.SPD * 0.25;
+                        break;
+                    case Rune.Type.Focus:
+                        _additionalStats[(int)Monster.Stat.Acc] += 20;
+                        break;
+                    case Rune.Type.Guard:
+                        _additionalStats[(int)Monster.Stat.Def] += _activeMonster.Def * 0.15;
+                        break;
+                    case Rune.Type.Endure:
+                        _additionalStats[(int)Monster.Stat.Res] += 20;
+                        break;
+                    case Rune.Type.Violent:
+                    case Rune.Type.Will:
+                    case Rune.Type.Nemesis:
+                    case Rune.Type.Shield:
+                    case Rune.Type.Revenge:
+                    case Rune.Type.Despair:
+                    case Rune.Type.Vampire:
+                        //No implementation so far
+                        break;
 
+
+                }
+            }
+            
+            _additionalStats[(int)Monster.Stat.HP] += calculateStatIncrease(_activeMonster.HP, overallStats[(int)RuneStat.Property.HPPercent], overallStats[(int)RuneStat.Property.HP]);
+            _additionalStats[(int)Monster.Stat.Atk] += calculateStatIncrease(_activeMonster.Atk, overallStats[(int)RuneStat.Property.AtkPercent], overallStats[(int)RuneStat.Property.Atk]);
+            _additionalStats[(int)Monster.Stat.Def] += calculateStatIncrease(_activeMonster.Def, overallStats[(int)RuneStat.Property.DefPercent], overallStats[(int)RuneStat.Property.Def]);
+            _additionalStats[(int)Monster.Stat.SPD] += overallStats[(int)RuneStat.Property.SPD];
+            _additionalStats[(int)Monster.Stat.CritRate] += overallStats[(int)RuneStat.Property.CritRate];
+            _additionalStats[(int)Monster.Stat.CritDmg] += overallStats[(int)RuneStat.Property.CritDmg];
+            _additionalStats[(int)Monster.Stat.Res] += overallStats[(int)RuneStat.Property.Res];
+            _additionalStats[(int)Monster.Stat.Acc] += overallStats[(int)RuneStat.Property.Acc];
+
+            for (int i = 0; i < _additionalStats.Length; i++)
+            {
+                _runedActiveMonster.setStat((Monster.Stat)i, _activeMonster.getStat((Monster.Stat)i) + (int)_additionalStats[i]);
+            }
+
+                
             displayMonsterOverall();
         }
 
@@ -243,6 +310,13 @@ namespace SummonersWarRuneBuilder
             double amount = (double)baseAmount;
             return (int)(amount * (100 + percentageIncrease) / 100.0 + staticIncrease);
         }
+
+        private int calculateStatIncrease(int baseAmount, int percentageIncrease, int staticIncrease)
+        {
+            double amount = (double)baseAmount;
+            return (int)(amount * percentageIncrease / 100.0 + staticIncrease);
+        }
+
 
     }
 
