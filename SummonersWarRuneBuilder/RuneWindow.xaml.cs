@@ -39,17 +39,18 @@ namespace SummonersWarRuneBuilder
         private ComboBox[] upgradeAmountComboBoxes;
         private TextBlock[] secondaryPropertyFinal;
         private TextBlock[] secondaryAmountFinal;
-        
-        private ObservableCollection<string> _mainPropertyList;
-        public ObservableCollection<string> mainPropertyList
+
+        private ObservableCollection<string> _primaryPropertyList;
+        private ObservableCollection<string> _secondaryPropertyList;
+        public ObservableCollection<string> secondaryPropertyList
         {
             get
             {
-                return _mainPropertyList;
+                return _secondaryPropertyList;
             }
             set
             {
-                _mainPropertyList = value;
+                _secondaryPropertyList = value;
                 NotifyPropertyChanged("mainPropertyList"); // method implemented below
             }
         }
@@ -65,7 +66,7 @@ namespace SummonersWarRuneBuilder
             }
         }
 
-        private List<String> _mainSelectedPropertyList;
+        private List<String> _secondarySelectedPropertyList;
 
 
         public event EventHandler<WindowEventArgs> DialogFinished;
@@ -89,9 +90,10 @@ namespace SummonersWarRuneBuilder
         private void createPropertyLists() 
         {
             PropertyList = Enum.GetNames(typeof(RuneStat.Property)).ToList();
-            
-            mainPropertyList = new ObservableCollection<String>(PropertyList);
-            _mainSelectedPropertyList = new List<String>();
+
+            _primaryPropertyList = new ObservableCollection<String>(_rune.getPrimaryPropertySelection().Select(i => i.ToString()));
+            secondaryPropertyList = new ObservableCollection<String>(PropertyList);
+            _secondarySelectedPropertyList = new List<String>();
             upgradePropertyList = new ObservableCollection<String>(PropertyList);
 
             TypeList = Enum.GetNames(typeof(Rune.Type)).ToList();
@@ -303,12 +305,12 @@ namespace SummonersWarRuneBuilder
 
         private void bindMainPropertyList()
         {
-            PrimaryPropertyCombo.ItemsSource = mainPropertyList;
-            InnatePropertyCombo.ItemsSource = mainPropertyList;
-            SecondaryPropertyCombo1.ItemsSource = mainPropertyList;
-            SecondaryPropertyCombo2.ItemsSource = mainPropertyList;
-            SecondaryPropertyCombo3.ItemsSource = mainPropertyList;
-            SecondaryPropertyCombo4.ItemsSource = mainPropertyList;
+            PrimaryPropertyCombo.ItemsSource = _primaryPropertyList;
+            InnatePropertyCombo.ItemsSource = secondaryPropertyList;
+            SecondaryPropertyCombo1.ItemsSource = secondaryPropertyList;
+            SecondaryPropertyCombo2.ItemsSource = secondaryPropertyList;
+            SecondaryPropertyCombo3.ItemsSource = secondaryPropertyList;
+            SecondaryPropertyCombo4.ItemsSource = secondaryPropertyList;
         }
 
         private void resetMainPropertyCounts()

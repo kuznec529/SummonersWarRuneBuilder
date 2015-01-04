@@ -138,6 +138,53 @@ namespace SummonersWarRuneBuilder
             this.type = type;
         }
 
+        public List<RuneStat.Property> getPrimaryPropertySelection()
+        {
+            List<RuneStat.Property> selection = new List<RuneStat.Property>();
+            if (slot == 1)
+            {
+                selection.Add(RuneStat.Property.Atk);
+                return selection;
+            }
+            else if (slot == 3)
+            {
+                selection.Add(RuneStat.Property.Def);
+                return selection;
+            }
+            else if (slot == 5)
+            {
+                selection.Add(RuneStat.Property.HP);
+                return selection;
+            }
+            else
+            {
+                selection.Add(RuneStat.Property.Atk);
+                selection.Add(RuneStat.Property.Def);
+                selection.Add(RuneStat.Property.HP);
+                selection.Add(RuneStat.Property.AtkPercent);
+                selection.Add(RuneStat.Property.DefPercent);
+                selection.Add(RuneStat.Property.HPPercent);
+                if (slot == 2)
+                {
+                    selection.Add(RuneStat.Property.SPD);
+                    return selection;
+                }
+                else if (slot == 3)
+                {
+                    selection.Add(RuneStat.Property.CritRate);
+                    selection.Add(RuneStat.Property.CritDmg);
+                    return selection;
+                }
+                else
+                {
+                    selection.Add(RuneStat.Property.Acc);
+                    selection.Add(RuneStat.Property.Res);
+                    return selection;
+                }
+            }
+
+        }
+
         public Boolean setPrimaryProperty(RuneStat.Property primaryStat) 
         {
             if (validPrimaryStat(primaryStat))
