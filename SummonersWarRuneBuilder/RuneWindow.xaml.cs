@@ -51,7 +51,7 @@ namespace SummonersWarRuneBuilder
             set
             {
                 _secondaryPropertyList = value;
-                NotifyPropertyChanged("mainPropertyList"); // method implemented below
+                NotifyPropertyChanged("secondaryPropertyList"); // method implemented below
             }
         }
 
@@ -142,62 +142,51 @@ namespace SummonersWarRuneBuilder
             Rune.Type runeType = (Rune.Type)Enum.Parse(typeof(Rune.Type), type, true);
             _rune.setProperties(star, runeType);
             _rune.setLevel(level);
-            setPrimary();
+            updatePrimary();
             setSecondary();
             setUpgrades();
-            setInherent();
+            updateInherent();
 
             _rune.calculate();
 
-            displayPrimary();
-            displaySecondary();
-            displayInherent();
-
             return true;
         }
 
-        private Boolean setPrimary()
+        private Boolean updatePrimary()
         {
-            RuneStat.Property runeProperty = RuneStat.toProperty((string)PrimaryPropertyCombo.SelectedItem);
-            _rune.setPrimaryProperty(runeProperty);
-            return true;
-        }
-        
-        private Boolean setInherent()
-        {
-            if (InnatePropertyCombo.SelectedItem == null || InnateAmountCombo.SelectedItem == null)
+            if (PrimaryPropertyCombo.SelectedItem != null)
             {
-                return false;
-            }
-            RuneStat.Property runeProperty = RuneStat.toProperty((string)InnatePropertyCombo.SelectedItem);
-            int runeAmount = 0;
-            if (InnateAmountCombo.SelectedIndex != 0)
-            {
-                runeAmount = (int)InnateAmountCombo.SelectedItem;
+                RuneStat.Property runeProperty = RuneStat.toProperty((string)PrimaryPropertyCombo.SelectedItem);
+                _rune.setPrimaryProperty(runeProperty);
+                RuneStat stat = _rune.getPrimary();
+                PrimaryPropertyOverall.Text = stat.property.ToString();
+                PrimaryAmountOverall.Text = _rune.getPrimary().amount.ToString();
+
+                return true;
             }
             else
             {
                 return false;
             }
-            _rune.setInherentStat(new RuneStat(runeProperty, runeAmount));
-            return true;
         }
-
-        private Boolean displayPrimary()
+        
+        private Boolean updateInherent()
         {
-            RuneStat stat = _rune.getPrimary();
-            PrimaryPropertyOverall.Text = stat.property.ToString();
-            PrimaryAmountOverall.Text = _rune.getPrimary().amount.ToString();
-            
-            return true;
-        }
+            if (InnatePropertyCombo.SelectedItem != null && InnateAmountCombo.SelectedItem != null)
+            {
+                RuneStat.Property runeProperty = RuneStat.toProperty((string)InnatePropertyCombo.SelectedItem);
+                int runeAmount = (int)InnateAmountCombo.SelectedItem;
+                _rune.setInherentStat(new RuneStat(runeProperty, runeAmount));
+                RuneStat stat = _rune.getInherent();
+                InnatePropertyOverall.Text = stat.property.ToString();
+                InnateAmountOverall.Text = stat.amount.ToString();
 
-        private Boolean displayInherent()
-        {
-            RuneStat stat = _rune.getInherent();
-            InnatePropertyOverall.Text = stat.property.ToString();
-            InnateAmountOverall.Text = stat.amount.ToString();
-            return true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private Boolean setSecondary()
@@ -381,12 +370,7 @@ namespace SummonersWarRuneBuilder
 
         private void PrimaryPropertyCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (PrimaryPropertyCombo.SelectedItem != null)
-            {
-                setPrimary();
-
-                displayPrimary();
-            }
+            updatePrimary();
         }
 
         private void SecondaryPropertyCombo1_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -442,6 +426,7 @@ namespace SummonersWarRuneBuilder
             if (StarCombo.SelectedItem != null)
             {
                 _rune.setStar(Int32.Parse((string)StarCombo.SelectedItem));
+                updatePrimary();
             }
         }
 
@@ -450,6 +435,7 @@ namespace SummonersWarRuneBuilder
             if (LevelCombo.SelectedItem != null)
             {
                 _rune.setLevel(Int32.Parse((string)LevelCombo.SelectedItem));
+                updatePrimary();
             }
         }
 
@@ -458,17 +444,13 @@ namespace SummonersWarRuneBuilder
             if (TypeCombo.SelectedItem != null)
             {
                 _rune.setType((Rune.Type)Enum.Parse(typeof(Rune.Type), (string)TypeCombo.SelectedItem, true));
+                updatePrimary();
             }
         }
 
         private void InnateAmountCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (InnateAmountCombo.SelectedItem != null && InnatePropertyCombo.SelectedItem != null)
-            {
-                setInherent();
-                calculate();
-                displayInherent();
-            }
+            updateInherent();
         }
 
         private void SecondaryAmountCombo1_SelectionChanged(object sender, SelectionChangedEventArgs e)
