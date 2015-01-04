@@ -8,31 +8,130 @@ namespace SummonersWarRuneBuilder
 {
     class Monster
     {
+        private int[] _stats;
+
         public string Name { get; private set; }
-        public int HP { get; private set; }
-        public int Atk { get; private set; }
-        public int Def { get; private set; }
-        public int SPD { get; private set; }
-        public int CritRate { get; private set; }
-        public int CritDmg { get; private set; }
-        public int Res { get; private set; }
-        public int Acc { get; private set; }
+        public int HP 
+        { 
+            get 
+            { 
+                return _stats[(int)Stat.HP]; 
+            } 
+            private set 
+            {
+                _stats[(int)Stat.HP] = value; 
+            } 
+        }
+        public int Atk
+        {
+            get
+            {
+                return _stats[(int)Stat.Atk];
+            }
+            private set
+            {
+                _stats[(int)Stat.Atk] = value;
+            }
+        }
+        public int Def
+        {
+            get
+            {
+                return _stats[(int)Stat.Def];
+            }
+            private set
+            {
+                _stats[(int)Stat.Def] = value;
+            }
+        }
+        public int SPD
+        {
+            get
+            {
+                return _stats[(int)Stat.SPD];
+            }
+            private set
+            {
+                _stats[(int)Stat.SPD] = value;
+            }
+        }
+        public int CritRate
+        {
+            get
+            {
+                return _stats[(int)Stat.CritRate];
+            }
+            private set
+            {
+                _stats[(int)Stat.CritRate] = value;
+            }
+        }
+        public int CritDmg
+        {
+            get
+            {
+                return _stats[(int)Stat.CritDmg];
+            }
+            private set
+            {
+                _stats[(int)Stat.CritDmg] = value;
+            }
+        }
+        public int Res
+        {
+            get
+            {
+                return _stats[(int)Stat.Res];
+            }
+            private set
+            {
+                _stats[(int)Stat.Res] = value;
+            }
+        }
+        public int Acc
+        {
+            get
+            {
+                return _stats[(int)Stat.Acc];
+            }
+            private set
+            {
+                _stats[(int)Stat.Acc] = value;
+            }
+        }
+
+
+        public enum Stat
+        {
+            HP = 0,
+            Atk = 1,
+            Def = 2,
+            SPD = 3,
+            CritRate = 4,
+            CritDmg = 5,
+            Res = 6,
+            Acc = 7
+        }
+
+        private void initStats()
+        {
+            _stats = new int[Enum.GetNames(typeof(Stat)).Length];
+            for (int i = 0; i < _stats.Length; i++)
+            {
+                _stats[i] = 0;
+            }
+        }
 
         public Monster()
         {
             Name = "";
-            HP = 0;
-            Atk = 0;
-            Def = 0;
-            SPD = 0;
-            CritRate = 0;
-            CritDmg = 0;
-            Res = 0;
-            Acc = 0;
+            initStats();
+            
         }
 
         public Monster(Monster other)
         {
+            initStats();
             this.Name = other.Name;
             this.HP = other.HP;
             this.Atk = other.Atk;
@@ -46,7 +145,18 @@ namespace SummonersWarRuneBuilder
 
         public Monster(string data)
         {
+            initStats();
             unserialize(data);
+        }
+
+        public void setStat(Stat stat, int amount)
+        {
+            _stats[(int)stat] = amount;
+        }
+
+        public int getStat(Stat stat)
+        {
+            return _stats[(int)stat];
         }
 
         public void setName(string name)
@@ -102,14 +212,10 @@ namespace SummonersWarRuneBuilder
         {
             string[] stats = data.Split(',');
             Name = stats[0];
-            HP = Int32.Parse(stats[1]);
-            Atk = Int32.Parse(stats[2]);
-            Def = Int32.Parse(stats[3]);
-            SPD = Int32.Parse(stats[4]);
-            CritRate = Int32.Parse(stats[5]);
-            CritDmg = Int32.Parse(stats[6]);
-            Res = Int32.Parse(stats[7]);
-            Acc = Int32.Parse(stats[8]);
+            for (int i = 0; i < _stats.Length; i++)
+            {
+                _stats[i] = Int32.Parse(stats[i + 1]);
+            }
         }
 
         public string ToDisplayString()
