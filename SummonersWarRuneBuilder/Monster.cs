@@ -31,6 +31,19 @@ namespace SummonersWarRuneBuilder
             Acc = 0;
         }
 
+        public Monster(Monster other)
+        {
+            this.Name = other.Name;
+            this.HP = other.HP;
+            this.Atk = other.Atk;
+            this.Def = other.Def;
+            this.SPD = other.SPD;
+            this.CritRate = other.CritRate;
+            this.CritDmg = other.CritDmg;
+            this.Res = other.Res;
+            this.Acc = other.Acc;
+        }
+
         public Monster(string data)
         {
             unserialize(data);
@@ -121,6 +134,11 @@ namespace SummonersWarRuneBuilder
                 result.Add(monster.Name);
             }
             return result;
+        }
+
+        public Monster copy()
+        {
+            return new Monster(this);
         }
 
     }
