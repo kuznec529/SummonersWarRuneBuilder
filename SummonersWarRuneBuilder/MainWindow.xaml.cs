@@ -24,6 +24,7 @@ namespace SummonersWarRuneBuilder
         private static string _FilePath = "monsters.csv";
 
         private Rune[] _runes;
+        private Boolean[] _completedRunes;
         private List<Rune.Type> _runeBonuses;
         private List<RuneStat> _overallStats;
         private TextBlock[,] _runeStats;
@@ -124,7 +125,7 @@ namespace SummonersWarRuneBuilder
             String statString = e.Message;
             String[] stats = statString.Split(',');
             int slot = Int32.Parse(stats[0])-1;
-            
+            _completedRunes[slot] = true;
             displayStats(slot);
             updateRuneBonuses();
             updateOverallStats();
@@ -190,7 +191,7 @@ namespace SummonersWarRuneBuilder
 
         private void updateRuneBonuses()
         {
-            _runeBonuses = Rune.getSetBonuses(_runes.ToList());
+            _runeBonuses = Rune.getSetBonuses(getCompletedRunes());
             string result = "";
             foreach (Rune.Type type in _runeBonuses)
             {
@@ -202,13 +203,27 @@ namespace SummonersWarRuneBuilder
         private void updateOverallStats()
         {
             string result = "";
-            _overallStats = Rune.getCombinedStats(_runes.ToList());
+            
+            _overallStats = Rune.getCombinedStats(getCompletedRunes());
             foreach (RuneStat stat in _overallStats)
             {
 
                 result += stat.ToDisplayString() + "\n";
             }
             OverallStats.Text = result;
+        }
+
+        private List<Rune> getCompletedRunes()
+        {
+            List<Rune> result = new List<Rune>();
+            for (int i = 0; i < 6; i++)
+            {
+                if (_completedRunes[i])
+                {
+                    result.Add(_runes[i]);
+                }
+            }
+            return result;
         }
 
         private void displayMonsterOverall()
