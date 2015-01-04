@@ -36,6 +36,7 @@ namespace SummonersWarRuneBuilder
             Legendary = 4
         }
 
+
         public int level { get; private set; }
         public int star { get; private set; }
         public Type type { get; private set; }
@@ -383,6 +384,35 @@ namespace SummonersWarRuneBuilder
             } 
             
             return result;
+        }
+
+        public static List<RuneStat> getCombinedStats(List<Rune> runes)
+        {
+            int[] overallStats = new int[12];
+            List<RuneStat> result = new List<RuneStat>();
+            foreach (Rune rune in runes)
+            {
+                RuneStat primary = rune.getPrimary();
+                RuneStat inherent = rune.getInherent();
+                List<RuneStat> secondaries = rune.getOverallSecondaries();
+                overallStats[(int)primary.property] += primary.amount;
+                overallStats[(int)inherent.property] += inherent.amount;
+                foreach (RuneStat stat in secondaries)
+                {
+                    overallStats[(int)stat.property] += stat.amount;
+                }
+            }
+
+            for (int i = 1; i < overallStats.Length; i++)
+            {
+                if (overallStats[i] != 0)
+                {
+                    result.Add(new RuneStat((RuneStat.Property)i, overallStats[i]));
+                }
+            }
+
+            return result;
+
         }
 
     }

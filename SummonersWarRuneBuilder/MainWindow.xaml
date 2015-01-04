@@ -45,9 +45,10 @@
         <TextBlock x:Name="RuneStats6Secondary2" HorizontalAlignment="Left" Height="17" Margin="844,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
         <TextBlock x:Name="RuneStats6Secondary3" HorizontalAlignment="Left" Height="17" Margin="844,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
         <TextBlock x:Name="RuneStats6Secondary4" HorizontalAlignment="Left" Height="17" Margin="844,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="OverallStats" HorizontalAlignment="Left" Height="200" Margin="420,261,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="504"/>
+        <TextBlock x:Name="OverallStats" HorizontalAlignment="Left" Height="200" Margin="420,261,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
         <TextBlock x:Name="OriginalStats" HorizontalAlignment="Left" Height="200" Margin="26,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="360"/>
         <TextBlock x:Name="NewStats" HorizontalAlignment="Left" Height="199" Margin="26,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="360"/>
         <ComboBox x:Name="MonsterSelectionCombo" HorizontalAlignment="Left" Margin="26,20,0,0" VerticalAlignment="Top" Width="360" SelectionChanged="MonsterSelectionCombo_SelectionChanged"/>
+        <TextBlock x:Name="RuneBonus" HorizontalAlignment="Left" Height="200" Margin="657,261,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208"/>
     </Grid>
 </Window>

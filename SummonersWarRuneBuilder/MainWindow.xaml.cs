@@ -21,17 +21,11 @@ namespace SummonersWarRuneBuilder
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static string _FilePath = "monsters.csv";
+
         private Rune[] _runes;
-        private int[] _star;
-        private int[] _level;
-        private Rune.Type[] _type;
-        private Rune.Grade[] _grade;
-        private RuneStat[] _primary;
-        private RuneStat[] _inherent;
-        private RuneStat[,] _secondary;
-        private int[] _overallStats;
+        private List<RuneStat> _overallStats;
         private TextBlock[,] _runeStats;
-        private string _filePath = "monsters.csv";
         private string[] _monsterdata;
         private List<Monster> _monsters;
         private Monster _activeMonster;
@@ -47,7 +41,7 @@ namespace SummonersWarRuneBuilder
 
         private void LoadFile()
         {
-            _monsterdata = File.ReadAllLines(_filePath);
+            _monsterdata = File.ReadAllLines(_FilePath);
             _monsters = new List<Monster>();
             _activeMonster = new Monster();
             foreach (string line in _monsterdata)
@@ -73,24 +67,12 @@ namespace SummonersWarRuneBuilder
         private void InitStats()
         {
             _runes = new Rune[6];
-            _star = new int[6];
-            _level = new int[6];
-            _type = new Rune.Type[6];
-            _grade = new Rune.Grade[6];
-            _primary = new RuneStat[6];
-            _inherent = new RuneStat[6];
-            _secondary = new RuneStat[6, 4];
+            
             for (int i = 0; i < 6; i++)
             {
                 _runes[i] = new Rune(i+1);
-                _primary[i] = new RuneStat();
-                _inherent[i] = new RuneStat();
-                for (int j = 0; j < 4; j++)
-                {
-                    _secondary[i, j] = new RuneStat();
-                }
             }
-            _overallStats = new int[Enum.GetNames(typeof(RuneStat.Property)).Length];
+            _overallStats = new List<RuneStat>();
 
         }
 
@@ -140,106 +122,76 @@ namespace SummonersWarRuneBuilder
             String statString = e.Message;
             String[] stats = statString.Split(',');
             int slot = Int32.Parse(stats[0])-1;
-            _level[slot] = Int32.Parse(stats[1]);
-            _type[slot] = (Rune.Type)Enum.Parse(typeof(Rune.Type), stats[2], true);
-            _star[slot] = Int32.Parse(stats[3]);
-            _primary[slot] = RuneStat.Parse(stats[4]);
-            _inherent[slot] = RuneStat.Parse(stats[5]);
-
-            for (int i = 0; i < 4; i++)
-            {
-                _secondary[slot, i] = new RuneStat();
-            }
-            for (int i = 6; i < Math.Min(stats.Length - 1,10); i++)
-            {
-                _secondary[slot, i - 6] = RuneStat.Parse(stats[i]);
-            }
-
-            calculateOverallStats();
-            calculateMonsterOverall();
             displayStats(slot);
             displayOverallStats();
-            displayMonsterOverall();
+            updateMonsterOverall();
         }
 
         private void displayStats(int i)
         {
-            String primaryHeader = "Pri: ";
-            String secondaryHeader = "Sec: ";
-            String inherentHeader = "Inh: ";
+            String primaryHeader = "";
+            String secondaryHeader = "";
+            String inherentHeader = "";
             for (int j = 0; j < 6; j++)
             {
                 _runeStats[i, j].Text = "";
             }
 
-            if (_primary[i].property != RuneStat.Property.None)
+            if (_runes[i].getPrimary().property != RuneStat.Property.None)
             {
-                _runeStats[i, 0].Text = primaryHeader + _primary[i].ToDisplayString();
+                _runeStats[i, 0].Text = primaryHeader + _runes[i].getPrimary().ToDisplayString();
             }
-            if (_inherent[i].property != RuneStat.Property.None)
+            if (_runes[i].getInherent().property != RuneStat.Property.None)
             {
-                _runeStats[i, 1].Text = inherentHeader + _inherent[i].ToDisplayString();
+                _runeStats[i, 1].Text = inherentHeader + _runes[i].getInherent().ToDisplayString();
             }
-            if (_secondary[i, 0].property != RuneStat.Property.None)
+            List<RuneStat> stats = _runes[i].getOverallSecondaries();
+            for (int j = 0; j < 4; j++)
             {
-                _runeStats[i, 2].Text = secondaryHeader + _secondary[i, 0].ToDisplayString();
-            }
-            if (_secondary[i, 1].property != RuneStat.Property.None)
-            {
-                _runeStats[i, 3].Text = secondaryHeader + _secondary[i, 1].ToDisplayString();
-            }
-            if (_secondary[i, 2].property != RuneStat.Property.None)
-            {
-                _runeStats[i, 4].Text = secondaryHeader + _secondary[i, 2].ToDisplayString();
-            }
-            if (_secondary[i, 3].property != RuneStat.Property.None)
-            {
-                _runeStats[i, 5].Text = secondaryHeader + _secondary[i, 3].ToDisplayString();
-            }
-        }
-
-        private void calculateOverallStats()
-        {
-            for (int i = 0; i < _overallStats.Length; i++)
-            {
-                _overallStats[i] = 0;
-            }
-
-            for (int i = 0; i < 6; i++)
-            {
-                _overallStats[(int)_primary[i].property] += _primary[i].amount;
-                _overallStats[(int)_inherent[i].property] += _inherent[i].amount;
-                for (int j = 0; j < 4; j++)
+                if (j < stats.Count && stats[j].property != RuneStat.Property.None)
                 {
-                    _overallStats[(int)_secondary[i, j].property] += _secondary[i, j].amount;
+                    _runeStats[i, j + 2].Text = secondaryHeader + stats[j].ToDisplayString();
+                }
+                else
+                {
+                    _runeStats[i, j + 2].Text = "";
                 }
             }
         }
 
-        private void calculateMonsterOverall()
+        private void updateMonsterOverall()
         {
-            _runedActiveMonster = new Monster();
-            _runedActiveMonster.setName(_activeMonster.Name);
-            _runedActiveMonster.setHP(calculateStat(_activeMonster.HP, _overallStats[(int)RuneStat.Property.HPPercent], _overallStats[(int)RuneStat.Property.HP]));
-            _runedActiveMonster.setAtk(calculateStat(_activeMonster.Atk, _overallStats[(int)RuneStat.Property.AtkPercent], _overallStats[(int)RuneStat.Property.Atk]));
-            _runedActiveMonster.setDef(calculateStat(_activeMonster.Def, _overallStats[(int)RuneStat.Property.DefPercent], _overallStats[(int)RuneStat.Property.Def]));
-            _runedActiveMonster.setSPD(_activeMonster.SPD + _overallStats[(int)RuneStat.Property.SPD]);
-            _runedActiveMonster.setCritRate(_activeMonster.CritRate + _overallStats[(int)RuneStat.Property.CritRate]);
-            _runedActiveMonster.setCritDmg(_activeMonster.CritDmg + _overallStats[(int)RuneStat.Property.CritDmg]);
-            _runedActiveMonster.setRes(_activeMonster.Res + _overallStats[(int)RuneStat.Property.Res]);
-            _runedActiveMonster.setAcc(_activeMonster.Acc + _overallStats[(int)RuneStat.Property.Acc]);
-                        
+            _runedActiveMonster = new Monster(_activeMonster);
+            int[] overallStats = new int[Enum.GetNames(typeof(RuneStat.Property)).Length];
+            for (int i = 0; i < overallStats.Length; i++)
+            {
+                overallStats[i] = 0;
+            }
+            foreach (RuneStat stat in _overallStats)
+            {
+                overallStats[(int)stat.property] += stat.amount;
+            }
+
+            _runedActiveMonster.setHP(calculateStat(_activeMonster.HP, overallStats[(int)RuneStat.Property.HPPercent], overallStats[(int)RuneStat.Property.HP]));
+            _runedActiveMonster.setAtk(calculateStat(_activeMonster.Atk, overallStats[(int)RuneStat.Property.AtkPercent], overallStats[(int)RuneStat.Property.Atk]));
+            _runedActiveMonster.setDef(calculateStat(_activeMonster.Def, overallStats[(int)RuneStat.Property.DefPercent], overallStats[(int)RuneStat.Property.Def]));
+            _runedActiveMonster.setSPD(_activeMonster.SPD + overallStats[(int)RuneStat.Property.SPD]);
+            _runedActiveMonster.setCritRate(_activeMonster.CritRate + overallStats[(int)RuneStat.Property.CritRate]);
+            _runedActiveMonster.setCritDmg(_activeMonster.CritDmg + overallStats[(int)RuneStat.Property.CritDmg]);
+            _runedActiveMonster.setRes(_activeMonster.Res + overallStats[(int)RuneStat.Property.Res]);
+            _runedActiveMonster.setAcc(_activeMonster.Acc + overallStats[(int)RuneStat.Property.Acc]);
+
+            displayMonsterOverall();
         }
 
         private void displayOverallStats()
         {
             string result = "";
-            for (int i = 1; i < _overallStats.Length; i++)
+            _overallStats = Rune.getCombinedStats(_runes.ToList());
+            foreach (RuneStat stat in _overallStats)
             {
-                if (_overallStats[i] != 0)
-                {
-                    result += (new RuneStat((RuneStat.Property)i, _overallStats[i])).ToDisplayString() + "\n";
-                }
+
+                result += stat.ToDisplayString() + "\n";
             }
             OverallStats.Text = result;
         }
@@ -253,8 +205,7 @@ namespace SummonersWarRuneBuilder
         {
             _activeMonster = _monsters[MonsterSelectionCombo.SelectedIndex];
             OriginalStats.Text = _activeMonster.ToDisplayString();
-            calculateMonsterOverall();
-            displayMonsterOverall();
+            updateMonsterOverall();
         }
 
         private int calculateStat(int baseAmount, int percentageIncrease, int staticIncrease)
