@@ -24,6 +24,7 @@ namespace SummonersWarRuneBuilder
         private static string _FilePath = "monsters.csv";
 
         private Rune[] _runes;
+        private List<Rune.Type> _runeBonuses;
         private List<RuneStat> _overallStats;
         private TextBlock[,] _runeStats;
         private string[] _monsterdata;
@@ -67,10 +68,11 @@ namespace SummonersWarRuneBuilder
         private void InitStats()
         {
             _runes = new Rune[6];
-            
+            _completedRunes = new Boolean[6];
             for (int i = 0; i < 6; i++)
             {
                 _runes[i] = new Rune(i+1);
+                _completedRunes[i] = false;
             }
             _overallStats = new List<RuneStat>();
 
@@ -122,8 +124,10 @@ namespace SummonersWarRuneBuilder
             String statString = e.Message;
             String[] stats = statString.Split(',');
             int slot = Int32.Parse(stats[0])-1;
+            
             displayStats(slot);
-            displayOverallStats();
+            updateRuneBonuses();
+            updateOverallStats();
             updateMonsterOverall();
         }
 
@@ -184,7 +188,18 @@ namespace SummonersWarRuneBuilder
             displayMonsterOverall();
         }
 
-        private void displayOverallStats()
+        private void updateRuneBonuses()
+        {
+            _runeBonuses = Rune.getSetBonuses(_runes.ToList());
+            string result = "";
+            foreach (Rune.Type type in _runeBonuses)
+            {
+                result += type.ToString() + "\n";
+            }
+            RuneBonus.Text = result;
+        }
+
+        private void updateOverallStats()
         {
             string result = "";
             _overallStats = Rune.getCombinedStats(_runes.ToList());

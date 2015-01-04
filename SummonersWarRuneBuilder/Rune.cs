@@ -22,6 +22,7 @@ namespace SummonersWarRuneBuilder
             Violent,
             Will,
             Nemesis,
+            Shield,
             Revenge,
             Despair,
             Vampire
@@ -100,8 +101,8 @@ namespace SummonersWarRuneBuilder
                                                                                  { {1,3},{1,4},{2,5},{2,6},{3,7},{4,8} }, //Res
                                                                                  { {1,3},{1,4},{2,5},{2,6},{3,7},{4,8} } }; //Acc
 
-        private static readonly RuneStat.Property[][] _primaryPropertyList = new RuneStat.Property[6][];
-        
+        private static readonly int[] _runeSetCount = new int[15] { 2, 4, 2, 4, 4, 2, 2, 2, 4, 2, 2, 2, 2, 4, 4 };
+
         public static readonly int[] Stars = new int[6] { 1, 2, 3, 4, 5, 6 };
         public static readonly int[] Levels = new int[16] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
 
@@ -120,7 +121,6 @@ namespace SummonersWarRuneBuilder
                 _secondary[i] = new RuneStat();
                 _overallSecondary[i] = new RuneStat();
             }
-            _primaryPropertyList[0] = new RuneStat.Property[5];
         }
 
 
@@ -364,6 +364,30 @@ namespace SummonersWarRuneBuilder
                 result = _initialStatTable[(int)property, star - 1] + _statIncrementTable[(int)property, star - 1] * level;
             }
 
+            return result;
+        }
+
+        public static List<Type> getSetBonuses(List<Rune> runes)
+        {
+            int[] runeTypes = new int[15];
+            for (int i = 0; i < runeTypes.Length; i++)
+            {
+                runeTypes[i] = 0;
+            }
+
+            foreach (Rune rune in runes)
+            {
+                runeTypes[(int)rune.type] += 1;
+            }
+
+            List<Type> result = new List<Type>();
+            for (int i = 0; i < runeTypes.Length; i++)
+            {
+                for (int j = 0; j < runeTypes[i] / _runeSetCount[i]; j++)
+                {
+                    result.Add((Type)i);
+                }
+            }
             return result;
         }
 
