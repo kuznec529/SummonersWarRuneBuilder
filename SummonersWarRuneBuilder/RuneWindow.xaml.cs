@@ -269,7 +269,7 @@ namespace SummonersWarRuneBuilder
            
             if (DialogFinished != null)
                 DialogFinished(this, new WindowEventArgs(_rune.ToString()));
-
+            this.Close();
             
         }
 

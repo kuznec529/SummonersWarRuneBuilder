@@ -23,7 +23,6 @@
         <ComboBox x:Name="SecondaryAmountCombo2" HorizontalAlignment="Left" Margin="191,135,0,0" VerticalAlignment="Top" Width="49" Height="19" SelectionChanged="SecondaryAmountCombo2_SelectionChanged"/>
         <ComboBox x:Name="SecondaryAmountCombo3" HorizontalAlignment="Left" Margin="191,159,0,0" VerticalAlignment="Top" Width="49" Height="19" SelectionChanged="SecondaryAmountCombo3_SelectionChanged"/>
         <ComboBox x:Name="SecondaryAmountCombo4" HorizontalAlignment="Left" Margin="191,183,0,0" VerticalAlignment="Top" Width="49" Height="19" SelectionChanged="SecondaryAmountCombo4_SelectionChanged"/>
-        <Button x:Name="DoneButton" Content="Done" HorizontalAlignment="Left" Height="24" Margin="352,402,0,0" VerticalAlignment="Top" Width="91"/>
         <TextBlock x:Name="SecondaryLabel1" HorizontalAlignment="Left" Height="19" Margin="22,111,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
         <TextBlock x:Name="SecondaryLabel2" HorizontalAlignment="Left" Height="19" Margin="22,135,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
         <TextBlock x:Name="SecondaryLabel3" HorizontalAlignment="Left" Height="19" Margin="22,159,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
@@ -58,7 +57,7 @@
         <TextBlock x:Name="SecondaryAmountOverall4" HorizontalAlignment="Left" Height="19" Margin="147,383,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="48"/>
         <TextBlock x:Name="PrimaryAmountOverall" HorizontalAlignment="Left" Height="19" Margin="147,263,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="48"/>
         <TextBlock x:Name="InnateAmountOverall" HorizontalAlignment="Left" Height="19" Margin="147,287,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="48"/>
-        <Button x:Name="CalculateButton" Content="Calculate" HorizontalAlignment="Left" Height="24" Margin="245,402,0,0" VerticalAlignment="Top" Width="91" Click="RuneCalculateButton_Click"/>
+        <Button x:Name="DoneButton" Content="Done" HorizontalAlignment="Left" Height="24" Margin="352,402,0,0" VerticalAlignment="Top" Width="91" Click="RuneCalculateButton_Click"/>
         <TextBlock x:Name="ConsoleLog" HorizontalAlignment="Left" Height="115" Margin="326,263,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="117"/>
     </Grid>
 </Window>
