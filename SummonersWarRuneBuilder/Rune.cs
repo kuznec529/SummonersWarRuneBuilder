@@ -44,7 +44,7 @@ namespace SummonersWarRuneBuilder
         private RuneStat _inherent;
         private RuneStat[] _secondary;
         private RuneStat[] _upgrades;
-        private int[] _overallStats;
+        private RuneStat[] _overallSecondary;
         
         private static readonly int[,] _initialStatTable = new int[,] {{0,0,0,0,0,0},  //None
                                                                 {40,70,100,160,270,360}, //HP
@@ -109,14 +109,15 @@ namespace SummonersWarRuneBuilder
             level = 0;
             star = 1;
             this.slot = slot;
+            _inherent = new RuneStat();
             _upgrades = new RuneStat[4];
             _secondary = new RuneStat[4];
-            _inherent = new RuneStat();
-            _overallStats = new int[Enum.GetNames(typeof(RuneStat.Property)).Length];
+            _overallSecondary = new RuneStat[4];
             for (int i = 0; i < 4; i++)
             {
                 _upgrades[i] = new RuneStat();
                 _secondary[i] = new RuneStat();
+                _overallSecondary[i] = new RuneStat();
             }
             _primaryPropertyList[0] = new RuneStat.Property[5];
         }
@@ -185,7 +186,7 @@ namespace SummonersWarRuneBuilder
 
         }
 
-        public Boolean setPrimaryProperty(RuneStat.Property primaryStat) 
+        public Boolean setPrimaryProperty(RuneStat.Property primaryStat)
         {
             if (validPrimaryStat(primaryStat))
             {
@@ -198,33 +199,13 @@ namespace SummonersWarRuneBuilder
             }
         }
 
-        public Boolean setSecondaryStat(int i, RuneStat stat)
+        public Boolean setInherent(RuneStat stat)
         {
-            _secondary[i] = stat;
+            _inherent = stat;
             return true;
         }
 
-        public List<RuneStat> getCompiledSecondaryStats()
-        {
-            calculate();
-           
-            List<RuneStat> results = new List<RuneStat>();
-
-            for (int i = 0; i < _overallStats.Length; i++)
-            {
-                RuneStat.Property property = (RuneStat.Property)i;
-                
-                if (_overallStats[i] != 0 && property != _primary && property != _inherent.property)
-                {
-                    results.Add(new RuneStat(property, _overallStats[i]));
-                }
-                 
-            }
-
-            return results;
-        }
-
-        public Boolean setSecondaryStats(List<RuneStat> stats)
+        public Boolean setSecondaries(List<RuneStat> stats)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -235,16 +216,18 @@ namespace SummonersWarRuneBuilder
             {
                 _secondary[i] = stats[i];
             }
-
+            calculateSecondaries();
             return true;
         }
 
-        public RuneStat getSecondaryStats(int i)
+        public Boolean setSecondary(int i, RuneStat stat)
         {
-            return _secondary[i];
+            _secondary[i] = stat;
+            calculateSecondaries();
+            return true;
         }
 
-        public Boolean setUpgradeStats(List<RuneStat> stats)
+        public Boolean setUpgrades(List<RuneStat> stats)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -255,24 +238,14 @@ namespace SummonersWarRuneBuilder
             {
                 _upgrades[i] = stats[i];
             }
-
+            calculateSecondaries();
             return true;
         }
 
-        public Boolean setUpgradeStat(int i, RuneStat stats)
+        public Boolean setUpgrade(int i, RuneStat stats)
         {
             _upgrades[i] = stats;
-            return true;
-        }
-
-        private RuneStat getUpgradeStat(int i)
-        {
-            return _upgrades[i];
-        }
-
-        public Boolean setInherentStat(RuneStat stat)
-        {
-            _inherent = stat;
+            calculateSecondaries();
             return true;
         }
 
@@ -281,19 +254,6 @@ namespace SummonersWarRuneBuilder
             if (level <= 15)
             {
                 this.level = level;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public Boolean levelUp()
-        {
-            if (level < 15)
-            {
-                level += 1;
                 return true;
             }
             else
@@ -312,56 +272,68 @@ namespace SummonersWarRuneBuilder
             return _inherent;
         }
 
-        private int getPrimaryStatAmount(RuneStat.Property property, int level, int star) 
+        public RuneStat getSecondary(int i)
         {
-            int result = 0;
-            if (level > 14)
-            {
-                result = (int)((_initialStatTable[(int)property, star - 1] + _statIncrementTable[(int)property, star - 1] * 14) * 1.2);
-            }
-            else
-            {
-                result = _initialStatTable[(int)property, star - 1] + _statIncrementTable[(int)property, star - 1] * level;
-            }
-
-            return result;
+            return _secondary[i];
         }
 
-        public Boolean calculate()
+        private RuneStat getUpgrade(int i)
         {
-            for (int i = 0; i < _overallStats.Length; i++)
-            {
-                _overallStats[i] = 0;
-            }
+            return _upgrades[i];
+        }
 
-            if (_primary != RuneStat.Property.None)
-            {
-                _overallStats[(int)_primary] = getPrimaryStatAmount(_primary, level, star);
-            }
-
-            
+        private void calculateSecondaries()
+        {
+            List<RuneStat> stats = new List<RuneStat>();
             foreach (RuneStat stat in _secondary)
             {
-                if (stat != null && stat.property != RuneStat.Property.None)
+                if (stat.property != RuneStat.Property.None && stat.amount > 0)
                 {
-                    _overallStats[(int)stat.property] += stat.amount;
+                    stats.Add(stat.copy());
                 }
             }
-            
-            foreach (RuneStat stat in _upgrades)
+            for (int i = 0; i < 4; i++)
             {
-                if (stat != null && stat.property != RuneStat.Property.None)
+                if (i < stats.Count)
                 {
-                    _overallStats[(int)stat.property] += stat.amount;
+                    _overallSecondary[i] = stats[i];
+                }
+                else
+                {
+                    _overallSecondary[i] = new RuneStat();
                 }
             }
-            
-            if (_inherent.property != RuneStat.Property.None)
+
+            foreach (RuneStat upgrade in _upgrades)
             {
-                _overallStats[(int)_inherent.property] += _inherent.amount;
+                for (int i = 0; i < _overallSecondary.Length; i++)
+                {
+                    if (_overallSecondary[i].property == upgrade.property)
+                    {
+                        _overallSecondary[i].setAmount(_overallSecondary[i].amount + upgrade.amount);
+                        break;
+                    }
+                    else if (_overallSecondary[i].property == RuneStat.Property.None)
+                    {
+                        _overallSecondary[i] = upgrade.copy();
+                        break;
+                    }
+
+                }
             }
-            
-            return true;
+        }
+
+        public List<RuneStat> getOverallSecondaries()
+        {
+            List<RuneStat> result = new List<RuneStat>();
+            foreach (RuneStat stat in _overallSecondary)
+            {
+                if (stat.property != RuneStat.Property.None)
+                {
+                    result.Add(stat);
+                }
+            }
+            return result;
         }
 
         public static int[] getSecondaryBaseRange(RuneStat.Property property, int star)
@@ -379,6 +351,21 @@ namespace SummonersWarRuneBuilder
             return true;
         }
 
+        private int getPrimaryStatAmount(RuneStat.Property property, int level, int star)
+        {
+            int result = 0;
+            if (level > 14)
+            {
+                result = (int)((_initialStatTable[(int)property, star - 1] + _statIncrementTable[(int)property, star - 1] * 14) * 1.2);
+            }
+            else
+            {
+                result = _initialStatTable[(int)property, star - 1] + _statIncrementTable[(int)property, star - 1] * level;
+            }
+
+            return result;
+        }
+
         public override String ToString()
         {
             String result = slot.ToString() + ",";
@@ -387,7 +374,7 @@ namespace SummonersWarRuneBuilder
             result += star.ToString() + ",";
             result += getPrimary().ToString() + ",";
             result += _inherent.ToString() + ",";
-            List<RuneStat> secondaries = getCompiledSecondaryStats();
+            List<RuneStat> secondaries = getOverallSecondaries();
 
             foreach (RuneStat item in secondaries)
             {

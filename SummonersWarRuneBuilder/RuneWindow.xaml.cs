@@ -143,11 +143,9 @@ namespace SummonersWarRuneBuilder
             _rune.setProperties(star, runeType);
             _rune.setLevel(level);
             updatePrimary();
-            setSecondary();
-            setUpgrades();
             updateInherent();
-
-            _rune.calculate();
+            updateSecondary();
+            updateUpgrades();
 
             return true;
         }
@@ -176,7 +174,7 @@ namespace SummonersWarRuneBuilder
             {
                 RuneStat.Property runeProperty = RuneStat.toProperty((string)InnatePropertyCombo.SelectedItem);
                 int runeAmount = (int)InnateAmountCombo.SelectedItem;
-                _rune.setInherentStat(new RuneStat(runeProperty, runeAmount));
+                _rune.setInherent(new RuneStat(runeProperty, runeAmount));
                 RuneStat stat = _rune.getInherent();
                 InnatePropertyOverall.Text = stat.property.ToString();
                 InnateAmountOverall.Text = stat.amount.ToString();
@@ -189,17 +187,17 @@ namespace SummonersWarRuneBuilder
             }
         }
 
-        private Boolean setSecondary()
+        private Boolean updateSecondary()
         {
             for (int i = 0; i <= 3; i++)
             {
-                setSecondary(i);
+                updateSecondary(i);
             }
             return true;
 
         }
 
-        private Boolean setSecondary(int i)
+        private Boolean updateSecondary(int i)
         {
             if (secondaryPropertyComboBoxes[i].SelectedItem != null && secondaryAmountComboBoxes[i].SelectedItem != null && 
                 secondaryPropertyComboBoxes[i].SelectedIndex != 0 && secondaryAmountComboBoxes[i].SelectedIndex != 0)
@@ -207,18 +205,19 @@ namespace SummonersWarRuneBuilder
                 RuneStat stat = new RuneStat();
                 stat.setProperty(RuneStat.toProperty((string)secondaryPropertyComboBoxes[i].SelectedItem));
                 stat.setAmount((int)secondaryAmountComboBoxes[i].SelectedItem);
-                _rune.setSecondaryStat(i, stat);
+                _rune.setSecondary(i, stat);
             }
             else
             {
-                _rune.setSecondaryStat(i, new RuneStat());
+                _rune.setSecondary(i, new RuneStat());
             }
+            displaySecondary();
             return true;
         }
 
         private Boolean displaySecondary()
         {
-            List<RuneStat> stats = _rune.getCompiledSecondaryStats();
+            List<RuneStat> stats = _rune.getOverallSecondaries();
             for (int i = 0; i < 4; i++)
             {
                 if (i < stats.Count)
@@ -236,16 +235,16 @@ namespace SummonersWarRuneBuilder
             return true;
         }
 
-        private Boolean setUpgrades()
+        private Boolean updateUpgrades()
         {
             for (int i = 0; i <= 3; i++)
             {
-                setUpgrade(i);
+                updateUpgrade(i);
             }
             return true;
         }
 
-        private Boolean setUpgrade(int i)
+        private Boolean updateUpgrade(int i)
         {
             if (upgradePropertyComboBoxes[i].SelectedItem != null && upgradeAmountComboBoxes[i].SelectedItem != null && 
                 upgradePropertyComboBoxes[i].SelectedIndex != 0 && upgradeAmountComboBoxes[i].SelectedIndex != 0)
@@ -253,13 +252,14 @@ namespace SummonersWarRuneBuilder
                 RuneStat stat = new RuneStat();
                 stat.setProperty(RuneStat.toProperty((string)upgradePropertyComboBoxes[i].SelectedItem));
                 stat.setAmount((int)upgradeAmountComboBoxes[i].SelectedItem);
-                _rune.setUpgradeStat(i, stat);
+                _rune.setUpgrade(i, stat);
             }
             else
             {
-                _rune.setUpgradeStat(i, new RuneStat());
+                _rune.setUpgrade(i, new RuneStat());
                 return false;
             }
+            displaySecondary();
             return true;
         }
 
@@ -368,6 +368,33 @@ namespace SummonersWarRuneBuilder
         //
         //
 
+        private void StarCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (StarCombo.SelectedItem != null)
+            {
+                _rune.setStar(Int32.Parse((string)StarCombo.SelectedItem));
+                updatePrimary();
+            }
+        }
+
+        private void LevelCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LevelCombo.SelectedItem != null)
+            {
+                _rune.setLevel(Int32.Parse((string)LevelCombo.SelectedItem));
+                updatePrimary();
+            }
+        }
+
+        private void TypeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (TypeCombo.SelectedItem != null)
+            {
+                _rune.setType((Rune.Type)Enum.Parse(typeof(Rune.Type), (string)TypeCombo.SelectedItem, true));
+                updatePrimary();
+            }
+        }
+
         private void PrimaryPropertyCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             updatePrimary();
@@ -421,33 +448,6 @@ namespace SummonersWarRuneBuilder
         }
 
 
-        private void StarCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (StarCombo.SelectedItem != null)
-            {
-                _rune.setStar(Int32.Parse((string)StarCombo.SelectedItem));
-                updatePrimary();
-            }
-        }
-
-        private void LevelCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (LevelCombo.SelectedItem != null)
-            {
-                _rune.setLevel(Int32.Parse((string)LevelCombo.SelectedItem));
-                updatePrimary();
-            }
-        }
-
-        private void TypeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (TypeCombo.SelectedItem != null)
-            {
-                _rune.setType((Rune.Type)Enum.Parse(typeof(Rune.Type), (string)TypeCombo.SelectedItem, true));
-                updatePrimary();
-            }
-        }
-
         private void InnateAmountCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             updateInherent();
@@ -455,42 +455,22 @@ namespace SummonersWarRuneBuilder
 
         private void SecondaryAmountCombo1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SecondaryPropertyCombo1.SelectedItem != null && SecondaryAmountCombo1.SelectedItem != null)
-            {
-                setSecondary(0);
-                calculate();
-                displaySecondary();
-            }
+            updateSecondary(0);
         }
 
         private void SecondaryAmountCombo2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SecondaryPropertyCombo2.SelectedItem != null && SecondaryAmountCombo2.SelectedItem != null)
-            {
-                setSecondary(1);
-                calculate();
-                displaySecondary();
-            }
+            updateSecondary(1);
         }
 
         private void SecondaryAmountCombo3_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SecondaryPropertyCombo3.SelectedItem != null && SecondaryAmountCombo3.SelectedItem != null)
-            {
-                setSecondary(2);
-                calculate();
-                displaySecondary();
-            }
+            updateSecondary(2);
         }
 
         private void SecondaryAmountCombo4_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SecondaryPropertyCombo4.SelectedItem != null && SecondaryAmountCombo4.SelectedItem != null)
-            {
-                setSecondary(3);
-                calculate();
-                displaySecondary();
-            }
+            updateSecondary(3);
         }
 
         private void Upgrade3PropertyCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -535,42 +515,22 @@ namespace SummonersWarRuneBuilder
 
         private void Upgrade3AmountCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Upgrade3PropertyCombo.SelectedItem != null && Upgrade3AmountCombo.SelectedItem != null)
-            {
-                setUpgrade(0);
-                calculate();
-                displaySecondary();
-            }
+            updateUpgrade(0);
         }
 
         private void Upgrade6AmountCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Upgrade6PropertyCombo.SelectedItem != null && Upgrade6AmountCombo.SelectedItem != null)
-            {
-                setUpgrade(1);
-                calculate();
-                displaySecondary();
-            }
+            updateUpgrade(1);
         }
 
         private void Upgrade9AmountCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Upgrade9PropertyCombo.SelectedItem != null && Upgrade9AmountCombo.SelectedItem != null)
-            {
-                setUpgrade(2);
-                calculate();
-                displaySecondary();
-            }
+            updateUpgrade(2);
         }
 
         private void Upgrade12AmountCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Upgrade12PropertyCombo.SelectedItem != null && Upgrade12AmountCombo.SelectedItem != null)
-            {
-                setUpgrade(3);
-                calculate();
-                displaySecondary();
-            }
+            updateUpgrade(3);
         }
 
         //

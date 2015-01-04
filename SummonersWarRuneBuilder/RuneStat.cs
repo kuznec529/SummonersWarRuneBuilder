@@ -162,7 +162,10 @@ namespace SummonersWarRuneBuilder
             return (RuneStat.Property)Enum.Parse(typeof(RuneStat.Property), property, true);
         }
 
-
+        public RuneStat copy()
+        {
+            return new RuneStat(property, amount);
+        }
     }
 
 }

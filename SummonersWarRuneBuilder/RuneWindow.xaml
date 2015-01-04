@@ -20,9 +20,9 @@
         <ComboBox x:Name="SecondaryPropertyCombo3" HorizontalAlignment="Left" Margin="94,159,0,0" VerticalAlignment="Top" Width="82" Height="19" SelectionChanged="SecondaryPropertyCombo3_SelectionChanged"/>
         <ComboBox x:Name="SecondaryPropertyCombo4" HorizontalAlignment="Left" Margin="94,183,0,0" VerticalAlignment="Top" Width="82" Height="19" SelectionChanged="SecondaryPropertyCombo4_SelectionChanged"/>
         <ComboBox x:Name="SecondaryAmountCombo1" HorizontalAlignment="Left" Margin="191,111,0,0" VerticalAlignment="Top" Width="49" Height="19" SelectionChanged="SecondaryAmountCombo1_SelectionChanged"/>
-        <ComboBox x:Name="SecondaryAmountCombo2" HorizontalAlignment="Left" Margin="191,135,0,0" VerticalAlignment="Top" Width="49" Height="19"/>
-        <ComboBox x:Name="SecondaryAmountCombo3" HorizontalAlignment="Left" Margin="191,159,0,0" VerticalAlignment="Top" Width="49" Height="19"/>
-        <ComboBox x:Name="SecondaryAmountCombo4" HorizontalAlignment="Left" Margin="191,183,0,0" VerticalAlignment="Top" Width="49" Height="19"/>
+        <ComboBox x:Name="SecondaryAmountCombo2" HorizontalAlignment="Left" Margin="191,135,0,0" VerticalAlignment="Top" Width="49" Height="19" SelectionChanged="SecondaryAmountCombo2_SelectionChanged"/>
+        <ComboBox x:Name="SecondaryAmountCombo3" HorizontalAlignment="Left" Margin="191,159,0,0" VerticalAlignment="Top" Width="49" Height="19" SelectionChanged="SecondaryAmountCombo3_SelectionChanged"/>
+        <ComboBox x:Name="SecondaryAmountCombo4" HorizontalAlignment="Left" Margin="191,183,0,0" VerticalAlignment="Top" Width="49" Height="19" SelectionChanged="SecondaryAmountCombo4_SelectionChanged"/>
         <Button x:Name="DoneButton" Content="Done" HorizontalAlignment="Left" Height="24" Margin="352,402,0,0" VerticalAlignment="Top" Width="91"/>
         <TextBlock x:Name="SecondaryLabel1" HorizontalAlignment="Left" Height="19" Margin="22,111,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
         <TextBlock x:Name="SecondaryLabel2" HorizontalAlignment="Left" Height="19" Margin="22,135,0,0" TextWrapping="Wrap" Text="Secondary" VerticalAlignment="Top" Width="67"/>
