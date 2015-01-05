@@ -2,53 +2,56 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="540" Width="960">
+    
     <Grid>
-        <ToggleButton x:Name="Rune1" Content="Rune 1" HorizontalAlignment="Left" Height="21" Margin="420,20,0,0" VerticalAlignment="Top" Width="80" Click="Rune1_Click"/>
-        <ToggleButton x:Name="Rune2" Content="Rune 2" HorizontalAlignment="Left" Height="21" Margin="504,20,0,0" VerticalAlignment="Top" Width="80" Click="Rune2_Click"/>
-        <ToggleButton x:Name="Rune3" Content="Rune 3" HorizontalAlignment="Left" Height="21" Margin="590,20,0,0" VerticalAlignment="Top" Width="80" Click="Rune3_Click"/>
-        <ToggleButton x:Name="Rune4" Content="Rune 4" HorizontalAlignment="Left" Height="21" Margin="674,20,0,0" VerticalAlignment="Top" Width="80" Click="Rune4_Click"/>
-        <ToggleButton x:Name="Rune5" Content="Rune 5" HorizontalAlignment="Left" Height="21" Margin="760,20,0,0" VerticalAlignment="Top" Width="80" Click="Rune5_Click"/>
-        <ToggleButton x:Name="Rune6" Content="Rune 6" HorizontalAlignment="Left" Height="21" Margin="844,20,0,0" VerticalAlignment="Top" Width="80" Click="Rune6_Click"/>
-        <TextBlock x:Name="RuneStats1Primary" HorizontalAlignment="Left" Height="29" Margin="420,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats1Inherent" HorizontalAlignment="Left" Height="17" Margin="420,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats1Secondary1" HorizontalAlignment="Left" Height="17" Margin="420,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats1Secondary2" HorizontalAlignment="Left" Height="17" Margin="420,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats1Secondary3" HorizontalAlignment="Left" Height="17" Margin="420,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats1Secondary4" HorizontalAlignment="Left" Height="17" Margin="420,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats2Primary" HorizontalAlignment="Left" Height="29" Margin="504,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats2Inherent" HorizontalAlignment="Left" Height="17" Margin="504,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats2Secondary1" HorizontalAlignment="Left" Height="17" Margin="504,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats2Secondary2" HorizontalAlignment="Left" Height="17" Margin="504,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats2Secondary3" HorizontalAlignment="Left" Height="17" Margin="504,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats2Secondary4" HorizontalAlignment="Left" Height="17" Margin="504,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats3Primary" HorizontalAlignment="Left" Height="29" Margin="590,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats3Inherent" HorizontalAlignment="Left" Height="17" Margin="590,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats3Secondary1" HorizontalAlignment="Left" Height="17" Margin="590,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats3Secondary2" HorizontalAlignment="Left" Height="17" Margin="590,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats3Secondary3" HorizontalAlignment="Left" Height="17" Margin="590,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats3Secondary4" HorizontalAlignment="Left" Height="17" Margin="590,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats4Primary" HorizontalAlignment="Left" Height="29" Margin="674,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats4Inherent" HorizontalAlignment="Left" Height="17" Margin="674,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats4Secondary1" HorizontalAlignment="Left" Height="17" Margin="674,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats4Secondary2" HorizontalAlignment="Left" Height="17" Margin="674,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats4Secondary3" HorizontalAlignment="Left" Height="17" Margin="674,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats4Secondary4" HorizontalAlignment="Left" Height="17" Margin="674,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats5Primary" HorizontalAlignment="Left" Height="29" Margin="760,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats5Inherent" HorizontalAlignment="Left" Height="17" Margin="760,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats5Secondary1" HorizontalAlignment="Left" Height="17" Margin="760,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats5Secondary2" HorizontalAlignment="Left" Height="17" Margin="760,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats5Secondary3" HorizontalAlignment="Left" Height="17" Margin="760,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats5Secondary4" HorizontalAlignment="Left" Height="17" Margin="760,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats6Primary" HorizontalAlignment="Left" Height="29" Margin="844,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats6Inherent" HorizontalAlignment="Left" Height="17" Margin="844,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats6Secondary1" HorizontalAlignment="Left" Height="17" Margin="844,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats6Secondary2" HorizontalAlignment="Left" Height="17" Margin="844,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats6Secondary3" HorizontalAlignment="Left" Height="17" Margin="844,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
-        <TextBlock x:Name="RuneStats6Secondary4" HorizontalAlignment="Left" Height="17" Margin="844,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
+        <Button x:Name="Rune1" Content="Rune 1" HorizontalAlignment="Left" Height="21" Margin="420,20,0,0" VerticalAlignment="Top" Width="80" Click="Rune1_Click"/>
+        <Button x:Name="Rune2" Content="Rune 2" HorizontalAlignment="Left" Height="21" Margin="504,20,0,0" VerticalAlignment="Top" Width="80" Click="Rune2_Click"/>
+        <Button x:Name="Rune3" Content="Rune 3" HorizontalAlignment="Left" Height="21" Margin="590,20,0,0" VerticalAlignment="Top" Width="80" Click="Rune3_Click"/>
+        <Button x:Name="Rune4" Content="Rune 4" HorizontalAlignment="Left" Height="21" Margin="674,20,0,0" VerticalAlignment="Top" Width="80" Click="Rune4_Click"/>
+        <Button x:Name="Rune5" Content="Rune 5" HorizontalAlignment="Left" Height="21" Margin="760,20,0,0" VerticalAlignment="Top" Width="80" Click="Rune5_Click"/>
+        <Button x:Name="Rune6" Content="Rune 6" HorizontalAlignment="Left" Height="21" Margin="844,20,0,0" VerticalAlignment="Top" Width="80" Click="Rune6_Click"/>
+        <TextBlock x:Name="RuneStats1Primary" HorizontalAlignment="Left" Height="29" Margin="420,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="18"/>
+        <TextBlock x:Name="RuneStats1Inherent" HorizontalAlignment="Left" Height="17" Margin="420,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="11"/>
+        <TextBlock x:Name="RuneStats1Secondary1" HorizontalAlignment="Left" Height="17" Margin="420,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats1Secondary2" HorizontalAlignment="Left" Height="17" Margin="420,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats1Secondary3" HorizontalAlignment="Left" Height="17" Margin="420,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats1Secondary4" HorizontalAlignment="Left" Height="17" Margin="420,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats2Primary" HorizontalAlignment="Left" Height="29" Margin="504,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="18"/>
+        <TextBlock x:Name="RuneStats2Inherent" HorizontalAlignment="Left" Height="17" Margin="504,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="11"/>
+        <TextBlock x:Name="RuneStats2Secondary1" HorizontalAlignment="Left" Height="17" Margin="504,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats2Secondary2" HorizontalAlignment="Left" Height="17" Margin="504,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats2Secondary3" HorizontalAlignment="Left" Height="17" Margin="504,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats2Secondary4" HorizontalAlignment="Left" Height="17" Margin="504,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats3Primary" HorizontalAlignment="Left" Height="29" Margin="590,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="18"/>
+        <TextBlock x:Name="RuneStats3Inherent" HorizontalAlignment="Left" Height="17" Margin="590,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="11"/>
+        <TextBlock x:Name="RuneStats3Secondary1" HorizontalAlignment="Left" Height="17" Margin="590,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats3Secondary2" HorizontalAlignment="Left" Height="17" Margin="590,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats3Secondary3" HorizontalAlignment="Left" Height="17" Margin="590,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats3Secondary4" HorizontalAlignment="Left" Height="17" Margin="590,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats4Primary" HorizontalAlignment="Left" Height="29" Margin="674,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="18"/>
+        <TextBlock x:Name="RuneStats4Inherent" HorizontalAlignment="Left" Height="17" Margin="674,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="11"/>
+        <TextBlock x:Name="RuneStats4Secondary1" HorizontalAlignment="Left" Height="17" Margin="674,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats4Secondary2" HorizontalAlignment="Left" Height="17" Margin="674,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats4Secondary3" HorizontalAlignment="Left" Height="17" Margin="674,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats4Secondary4" HorizontalAlignment="Left" Height="17" Margin="674,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats5Primary" HorizontalAlignment="Left" Height="29" Margin="760,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="18"/>
+        <TextBlock x:Name="RuneStats5Inherent" HorizontalAlignment="Left" Height="17" Margin="760,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="11"/>
+        <TextBlock x:Name="RuneStats5Secondary1" HorizontalAlignment="Left" Height="17" Margin="760,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats5Secondary2" HorizontalAlignment="Left" Height="17" Margin="760,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats5Secondary3" HorizontalAlignment="Left" Height="17" Margin="760,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats5Secondary4" HorizontalAlignment="Left" Height="17" Margin="760,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats6Primary" HorizontalAlignment="Left" Height="29" Margin="844,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="18"/>
+        <TextBlock x:Name="RuneStats6Inherent" HorizontalAlignment="Left" Height="17" Margin="844,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="11"/>
+        <TextBlock x:Name="RuneStats6Secondary1" HorizontalAlignment="Left" Height="17" Margin="844,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats6Secondary2" HorizontalAlignment="Left" Height="17" Margin="844,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats6Secondary3" HorizontalAlignment="Left" Height="17" Margin="844,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
+        <TextBlock x:Name="RuneStats6Secondary4" HorizontalAlignment="Left" Height="17" Margin="844,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" FontSize="13"/>
         <TextBlock x:Name="OverallStats" HorizontalAlignment="Left" Height="200" Margin="420,261,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
-        <TextBlock x:Name="OriginalStats" HorizontalAlignment="Left" Height="200" Margin="26,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="360"/>
-        <TextBlock x:Name="NewStats" HorizontalAlignment="Left" Height="199" Margin="26,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="360"/>
+        <TextBlock x:Name="OriginalStats" HorizontalAlignment="Left" Height="200" Margin="26,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170"/>
+        <TextBlock x:Name="NewStats" HorizontalAlignment="Left" Height="199" Margin="216,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170"/>
         <ComboBox x:Name="MonsterSelectionCombo" HorizontalAlignment="Left" Margin="26,20,0,0" VerticalAlignment="Top" Width="360" SelectionChanged="MonsterSelectionCombo_SelectionChanged"/>
         <TextBlock x:Name="RuneBonus" HorizontalAlignment="Left" Height="200" Margin="657,261,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208"/>
+        <Label x:Name="MonsterLabel" Content="Base Stats" HorizontalAlignment="Left" Height="23" Margin="26,57,0,0" VerticalAlignment="Top" Width="109"/>
+        <Label x:Name="NewMonsterLabel" Content="Runed Stats" HorizontalAlignment="Left" Height="23" Margin="216,57,0,0" VerticalAlignment="Top" Width="109"/>
     </Grid>
 </Window>

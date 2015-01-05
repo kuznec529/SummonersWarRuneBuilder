@@ -25,6 +25,7 @@ namespace SummonersWarRuneBuilder
         
         //Main object declarations
         private Rune _rune;
+        public Boolean Active {get; private set;}
         private List<String> PropertyList;
         public List<String> TypeList;
         public List<String> GradeList;
@@ -269,7 +270,7 @@ namespace SummonersWarRuneBuilder
            
             if (DialogFinished != null)
                 DialogFinished(this, new WindowEventArgs(_rune.ToString()));
-            this.Close();
+            this.Hide();
             
         }
 

@@ -33,6 +33,7 @@ namespace SummonersWarRuneBuilder
         private List<Monster> _monsters;
         private Monster _activeMonster;
         private Monster _runedActiveMonster;
+        private RuneWindow[] _runeWindows;
 
         public MainWindow()
         {
@@ -40,6 +41,17 @@ namespace SummonersWarRuneBuilder
             LoadFile();
             InitStats();
             BindForm();
+            InitWindows();
+        }
+
+        private void InitWindows()
+        {
+            _runeWindows = new RuneWindow[6];
+            for (int i = 0; i < 6; i++)
+            {
+                _runeWindows[i] = new RuneWindow(_runes[i]);
+                _runeWindows[i].DialogFinished += new EventHandler<WindowEventArgs>(runeWin_DialogFinished);
+            }
         }
 
         private void LoadFile()
@@ -121,12 +133,23 @@ namespace SummonersWarRuneBuilder
 
         private void RuneClick(object sender, RoutedEventArgs e, int rune)
         {
-            if ((sender as System.Windows.Controls.Primitives.ToggleButton).IsChecked ?? false)
+            //if ((sender as System.Windows.Controls.Primitives.ToggleButton).IsChecked ?? false)
+            //{
+            /*
+            if (_runeWindows[rune - 1] == null)
             {
-                RuneWindow runeWin = new RuneWindow(_runes[rune-1]);
-                runeWin.DialogFinished += new EventHandler<WindowEventArgs>(runeWin_DialogFinished);
-                runeWin.Show();
+                _runeWindows[rune - 1] = new RuneWindow(_runes[rune - 1]);
+                _runeWindows[rune - 1].DialogFinished += new EventHandler<WindowEventArgs>(runeWin_DialogFinished);
+                _runeWindows[rune - 1].Show();
             }
+            else
+            {
+                _runeWindows[rune - 1].Activate();
+            }
+            */
+            //}
+            _runeWindows[rune - 1].Show();
+            _runeWindows[rune - 1].Activate();
         }
 
         void runeWin_DialogFinished(object sender, WindowEventArgs e)
